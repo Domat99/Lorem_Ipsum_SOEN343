@@ -1,68 +1,87 @@
-
 .home-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+}
+
+.home-content {
+    flex-basis: 50%;
+    padding: 50px;
+    background-color: #F9FFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.home-content h1 {
+    font-size: 3rem;
+    color: #111111;
+    margin-bottom: 20px;
+}
+
+.home-content h1 span {
+    color: #fe3456;
+    font-weight: bold;
+}
+
+.home-content p {
+    font-size: 1rem;
+    color: #111111;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+button {
+    background-color: #fe3456;
+    color: #F9FFFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.home-image {
+    flex-basis: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-    background-color: #8AB9F1;
+    background-color: #F9FFFF;
 }
 
-
-.home-content {
+.home-image img {
+    width: 80%;
+    height: auto;
+    max-height: 80%;
+}
+.tracking-form {
     display: flex;
-    width: 100%;
-    height: 100%;
+    align-items: center;
+    margin-top: 20px;
 }
 
-
-.left-div,
-.right-div {
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
+.tracking-input {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    width: 300px;
+    font-size: 1rem;
+    margin-right: 10px;
 }
 
-.left-div {
-    width: 50%;
-    background-color: #ffffff;
-    clip-path: polygon(
-            0 0,
-            0 100%,
-            40% 100%,
-            100% 50%,
-            40% 0,
-            0 0
-    );
+.tracking-button {
+    background-color: #fe3456;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
-.right-div {
-    padding-top: 10%;
-    width: 50%;
-    background-color: #8AB9F1;
-}
-
-.truck-image {
-    padding-top: 7%;
-}
-
-.learnMore-button {
-    border-radius: 13px;
-    color: #f7f7f7;
-    font-size: 16px;
-    background: #6960EC;
-    padding: 12px 18px;
-    text-decoration: none;
-}
-
-.learnMore-button:hover {
-    background: #4b45fd;
-    text-decoration: none;
-}
-
-
-.frozen-truck-image{
-
+.tracking-button:hover {
+    background-color: #fe3456;
 }
