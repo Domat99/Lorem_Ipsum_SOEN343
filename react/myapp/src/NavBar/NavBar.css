@@ -1,0 +1,89 @@
+.navbarList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    background-color: #9EC3E6;
+    box-shadow: none;
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    padding: 0 20px;
+}
+
+.logo {
+    height: 60px;
+    width: auto;
+}
+
+.navMenu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.navMenu li {
+    margin: 0 20px;
+}
+
+.navlinks {
+    text-decoration: none;
+    color: black;
+    padding: 0.7rem 0.5rem;
+    white-space: nowrap;
+    transition: all 0.2s ease-in-out;
+    font-weight: bold;
+}
+
+.navlinks:hover {
+    background-color: #1C264A;
+    color: #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.menu-icon {
+    display: none;
+}
+
+@media screen and (max-width: 960px) {
+    .navbarList {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu-icon {
+        display: block;
+        font-size: 2rem;
+        cursor: pointer;
+    }
+
+    .navMenu {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 80px;
+        left: -100%;
+        opacity: 1;
+        transition: all 0.5s ease;
+        background-color: #fff;
+    }
+
+    .navMenu.active {
+        background-color: #fff;
+        left: 0;
+        transition: all 0.5s ease;
+        z-index: 1;
+    }
+
+    .navMenu li {
+        text-align: center;
+        margin: 20px 0;
+    }
+}
