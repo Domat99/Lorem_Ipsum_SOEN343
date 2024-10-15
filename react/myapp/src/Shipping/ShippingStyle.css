@@ -1,0 +1,232 @@
+.shipping-page {
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #F4F7FA;
+    font-family: Arial, sans-serif;
+}
+
+.shipping-page h1 {
+    text-align: center;
+    color: #253847;
+    margin-bottom: 60px;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+.accordion {
+    margin-bottom: 40px;
+}
+
+.accordion-item {
+    border: 1px solid #D9E1E8;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: #FFFFFF;
+    transition: box-shadow 0.3s ease;
+}
+
+.accordion-item:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.accordion-title {
+    padding: 15px 20px;
+    cursor: pointer;
+    background-color: #F9FFFF;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-title h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #111111;
+}
+
+.accordion-title .arrow {
+    font-size: 1.5rem;
+    color: #555555;
+}
+
+.accordion-item.active .arrow {
+    content: '\f106';
+}
+
+.accordion-item.active .accordion-title {
+    background-color: #F4F7FA;
+    border-left: 4px solid #FF6D1F;
+    padding-left: 10px;
+}
+
+.accordion-content {
+    padding: 15px;
+    background-color: #FFFFFF;
+    border-top: 1px solid #D9E1E8;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+}
+
+.terms {
+    margin-top: 20px;
+    padding: 0;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.terms a {
+    color: #FF6D1F;
+    text-decoration: underline;
+}
+
+.terms a:hover {
+    color: #E65817;
+    text-decoration: underline;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #FF6D1F;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #E65817;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+    background-color: #888888;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #555555;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.progress-step {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 4px solid #D9E1E8;
+}
+
+.progress-step.active {
+    color: #FF6D1F;
+    border-bottom: 4px solid #FF6D1F;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    background-color: #F9F9F9;
+    color: #333333;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #FF6D1F;
+    outline: none;
+}
+
+.form-inline {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.form-inline .form-group {
+    flex: 1;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.checkbox-group label {
+    margin-left: 8px;
+    font-size: 0.95rem;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+
+@media (max-width: 768px) {
+    .shipping-page {
+        width: 95%;
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .accordion-title {
+        padding: 10px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
