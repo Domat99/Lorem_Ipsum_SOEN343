@@ -10,7 +10,13 @@ export const menuNavbar = [
         title: "Track",
         url: "",
         cName: "navbarLinks",
-    },  {
+    },
+    {
+        title: "Quotation",
+        url: "",
+        cName: "navbarLinks",
+    },
+    {
         title: "Services",
         url: "",
         cName: "navbarLinks",
