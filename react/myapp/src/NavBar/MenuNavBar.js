@@ -2,26 +2,32 @@ import "./NavBar.css"
 
 export const menuNavbar = [
     {
-        title: "Shipping",
-        url: "",
-        cName: "navlinks",
+        title: "Ship",
+        url: "/Ship",
+        cName: "navbarLinks",
     },
     {
-        title: "Tracking",
+        title: "Track",
         url: "",
-        cName: "navlinks",
-    },  {
+        cName: "navbarLinks",
+    },
+    {
+        title: "Quotation",
+        url: "",
+        cName: "navbarLinks",
+    },
+    {
         title: "Services",
         url: "",
-        cName: "navlinks",
+        cName: "navbarLinks",
     },  {
         title: "Support",
         url: "",
-        cName: "navlinks",
+        cName: "navbarLinks",
     },
     {
         title: "Log in",
         url: "",
-        cName: "navlinks",
+        cName: "navbarLinks",
     },
 ]

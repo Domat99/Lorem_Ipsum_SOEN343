@@ -4,31 +4,33 @@ import "./NavBar.css";
 import { Link } from "react-router-dom";
 
 class Navbar extends Component {
-    state = { clicked: false };
+    state = { isMenuOpen: false };
 
-    handleClick = () => {
-        this.setState({ clicked: !this.state.clicked });
+    toggleMenu = () => {
+        this.setState({ isMenuOpen: !this.state.isMenuOpen });
+    };
+
+    closeMenuOnLinkClick = () => {
+        this.setState({ isMenuOpen: false });
     };
 
     render() {
         return (
-            <nav className="navbarList">
+            <nav className="navContainer">
                 <a href="/">
-                    <img className="logo" src="/images/logo.png" alt="Logo" />
+                    <img className="logo" src="/images/logo.png" alt="logo" />
                 </a>
-                <div className="menu-icon" onClick={this.handleClick}>
-                    <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
+                <div className="menuIcon" onClick={this.toggleMenu}>
+                    <i className={this.state.isMenuOpen ? "fas fa-times animated-icon" : "fas fa-bars animated-icon"}></i>
                 </div>
-                <ul className={this.state.clicked ? "navMenu active" : "navMenu"}>
-                    {menuNavbar.map((item, index) => {
-                        return (
-                            <li key={index}>
-                                <Link to={item.url} className="navlinks">
-                                    {item.title}
-                                </Link>
-                            </li>
-                        );
-                    })}
+                <ul className={this.state.isMenuOpen ? "navMenu active" : "navMenu"}>
+                    {menuNavbar.map((item, index) => (
+                        <li key={index}>
+                            <Link to={item.url} className={item.cName} onClick={this.closeMenuOnLinkClick}>
+                                <i className={item.icon}></i>{item.title}
+                            </Link>
+                        </li>
+                    ))}
                 </ul>
             </nav>
         );
