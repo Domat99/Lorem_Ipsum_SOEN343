@@ -1,11 +1,40 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import "./ShippingStyle.css";
+import GoogleMapsService from '../GoogleMaps/GoogleMapsService'; // Assuming the GoogleMapsService class is in this directory
+
+const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; // Load API key from environment
+const googleMapsService = new GoogleMapsService(apiKey); // Create an instance of the GoogleMapsService class
 
 const Shipping = () => {
     const [activeSection, setActiveSection] = useState(null);
+    const [distance, setDistance] = useState(null);
+
+    // State to hold form input values
+    const [fromAddress, setFromAddress] = useState('');
+    const [toAddress, setToAddress] = useState('');
+
+    useEffect(() => {
+        // Load the Google Maps script when the component mounts
+        googleMapsService.loadGoogleMapsScript();
+    }, []);
 
     const toggleSection = (section) => {
         setActiveSection(activeSection === section ? null : section);
+    };
+
+    // Function to initialize Google Maps Autocomplete for a given input field
+    const handleAutocomplete = (inputElement, setValue) => {
+        googleMapsService.initAutocomplete(inputElement, (place) => {
+            setValue(place.formatted_address);
+        });
+    };
+
+    // Function to calculate the distance between "Ship From" and "Ship To" addresses
+    const calculateDistance = (e) => {
+        e.preventDefault(); // Prevent form submission and page reload
+        googleMapsService.calculateDistance(fromAddress, toAddress, (distance) => {
+            setDistance(distance);
+        });
     };
 
     return (
@@ -26,6 +55,22 @@ const Shipping = () => {
                                         <option value="Canada">Canada</option>
                                     </select>
                                 </div>
+
+                                {/* Address Line 1 with Autocomplete */}
+                                <div className="form-group">
+                                    <label htmlFor="fromAddress1">Address Line 1 *</label>
+                                    <input
+                                        type="text"
+                                        id="fromAddress1"
+                                        name="fromAddress1"
+                                        value={fromAddress} // Controlled input
+                                        onChange={(e) => setFromAddress(e.target.value)}
+                                        required
+                                        onFocus={(e) => handleAutocomplete(e.target, setFromAddress)} // Trigger autocomplete
+                                    />
+                                </div>
+
+
                                 <div className="form-inline">
                                     <div className="form-group">
                                         <label htmlFor="fromName">Full Name or Company Name *</label>
@@ -109,6 +154,23 @@ const Shipping = () => {
                                         <option value="Argentina">Argentina</option>
                                     </select>
                                 </div>
+
+                                {/* Address Line 1 with Autocomplete */}
+                                <div className="form-group">
+                                    <label htmlFor="toAddress">Address Line 1 *</label>
+                                    <input
+                                        type="text"
+                                        id="toAddress"
+                                        name="toAddress"
+                                        value={toAddress}
+                                        onChange={(e) => setToAddress(e.target.value)}
+                                        onFocus={(e) => handleAutocomplete(e.target, setToAddress)}
+                                        required
+
+                                    />
+                                </div>
+
+
                                 <div className="form-inline">
                                     <div className="form-group">
                                         <label htmlFor="toName">Full Name or Company Name *</label>
@@ -157,6 +219,15 @@ const Shipping = () => {
                                         <input type="text" id="toExtension" name="toExtension"/>
                                     </div>
                                 </div>
+
+                                {/* Calculate Distance Button */}
+                                <div className="form-actions">
+                                    <button className="btn btn-primary" onClick={calculateDistance}>Calculate Distance</button>
+                                </div>
+
+                                {/* Display Distance */}
+                                {distance && <p>Distance: {distance}</p>}
+
                             </form>
                         </div>
                     )}
