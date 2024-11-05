@@ -27,7 +27,7 @@ export const menuNavbar = [
     },
     {
         title: "Log in",
-        url: "",
+        url: "/LogIn",
         cName: "navbarLinks",
     },
 ]
