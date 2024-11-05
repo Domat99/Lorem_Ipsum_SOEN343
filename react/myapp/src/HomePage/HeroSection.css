@@ -182,6 +182,7 @@ body {
 .values-container {
     text-align: center;
     padding: 2rem 0;
+    background-color: #FDFDFD;
 }
 
 .values-header {
