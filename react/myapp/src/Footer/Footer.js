@@ -7,10 +7,10 @@ const Footer = () => {
         <div className='footer-container'>
             <div className='footer-links'>
                 <Link to='/contact'>Contact Us</Link>
-                <Link to='/faq'>FAQ</Link>
+                <Link to="/infopages/faq">FAQ</Link>
                 <Link to='/tracking'>Track Your Package</Link>
-                <Link to='/shipping-policy'>Shipping Policy</Link>
-                <Link to='/cancellation-policy'>Cancellation Policy</Link>
+                <Link to='/infopages/policy'>Policy</Link>
+
             </div>
             <section className='social-media'>
                 <div className='social-media-wrap'>
