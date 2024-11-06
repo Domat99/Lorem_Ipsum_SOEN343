@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
@@ -15,7 +15,7 @@ const Footer = () => {
             <section className='social-media'>
                 <div className='social-media-wrap'>
                     <Link to='/' className='social-logo'>
-                        <img src="/Images/logo.png" alt="Pigeon Express Logo" className="footer-logo" />
+                        <img src="/Images/logo.png" alt="Pigeon Express Logo" className="footer-logo"/>
                     </Link>
                     <small className='website-rights'>Pigeon Express © {new Date().getFullYear()}</small>
                     <div className='social-icons'>

@@ -201,7 +201,7 @@ body {
 .values {
     display: flex;
     justify-content: space-around;
-    align-items: flex-start; /* Ensures icons are aligned at the top */
+    align-items: flex-start;
     width: 100%;
     margin: 0 auto;
     max-width: 1200px;
@@ -214,22 +214,22 @@ body {
     text-align: center;
     margin: 2rem 1rem;
     width: 30%;
-    padding: 1rem; /* Added padding for breathing room */
+    padding: 1rem;
 }
 
 @media (max-width: 768px) {
     .values {
-        flex-direction: column; /* Stacks the items vertically */
+        flex-direction: column;
     }
 
     .values-item {
-        width: 100%; /* Full width for each item on small screens */
-        margin-bottom: 2rem; /* Adds spacing between stacked items */
+        width: 100%;
+        margin-bottom: 2rem;
     }
 }
 
 .values-item i {
-    font-size: 2.5rem; /* Increase icon size */
+    font-size: 2.5rem;
     color: #253847;
     margin-bottom: 1rem;
 }
@@ -248,7 +248,7 @@ body {
 
 .values-text b {
     font-size: 1.2rem;
-    color: #253847; /* Dark blue for bold text */
+    color: #253847;
     margin-bottom: 0.5rem;
-    margin-top: 2rem; /* Adjust the space between the bold text and regular text */
+    margin-top: 2rem;
 }

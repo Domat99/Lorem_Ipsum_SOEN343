@@ -1,15 +1,15 @@
 
 .footer-container {
-        background-color: #253847;
-        padding: 2rem 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: #FDFDFD;
-        font-family: Arial, sans-serif;
-        width: 100%;
-        box-sizing: border-box;
+    background-color: #253847;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #FDFDFD;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 

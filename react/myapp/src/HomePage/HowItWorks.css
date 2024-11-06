@@ -14,8 +14,8 @@
 }
 
 .step {
-    width: 22%; /* Adjust width as needed */
-    flex-shrink: 0; /* Prevent shrinking of the items */
+    width: 22%;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,11 +47,11 @@
 
 @media (max-width: 1200px) {
     .steps {
-        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        flex-wrap: wrap;
     }
 
     .step {
-        width: 45%; /* Adjust width for smaller screens */
+        width: 45%;
         margin: 1rem auto;
     }
 }

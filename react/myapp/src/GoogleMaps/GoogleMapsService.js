@@ -20,7 +20,7 @@ class GoogleMapsService {
 
     initAutocomplete(inputElement, callback) {
         const autocomplete = new window.google.maps.places.Autocomplete(inputElement, {
-            componentRestrictions: { country: ["ca", "us"] } // Restrict to Canada (ca) and USA (us)
+            componentRestrictions: {country: ["ca", "us"]} // Restrict to Canada (ca) and USA (us)
         });
         autocomplete.addListener("place_changed", () => {
             const place = autocomplete.getPlace();
