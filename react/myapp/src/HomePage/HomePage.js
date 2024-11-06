@@ -7,9 +7,9 @@ import Testimonials from "./Testimonials";
 function Home() {
     return (
         <>
-            <HeroSection />
-            <Testimonials />
-            <HowItWorks />
+            <HeroSection/>
+            <Testimonials/>
+            <HowItWorks/>
 
         </>
     );

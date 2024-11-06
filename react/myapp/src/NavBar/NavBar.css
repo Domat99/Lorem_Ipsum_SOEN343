@@ -12,12 +12,15 @@
     z-index: 10;
     padding: 0 30px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
 }
 
 .logo {
     max-height: 60px;
     margin-left: 0;
+}
+
+.userName {
+    margin-left: 4px;
 }
 
 .navMenu {
@@ -26,6 +29,7 @@
     margin: 0;
     padding: 0;
     justify-content: flex-end;
+    align-items: center;
     flex-grow: 1;
 }
 
@@ -40,12 +44,11 @@
     white-space: nowrap;
     font-weight: 600;
     font-size: 1.2rem;
-    transition: all 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out;
     position: relative;
 }
 
 .navbarLinks:hover {
-    background-color: transparent;
     color: #FF6D1F;
 }
 
@@ -66,16 +69,68 @@
     width: 100%;
 }
 
+.navbarUser {
+    display: flex;
+    align-items: center;
+    color: #F9FFFF;
+    padding: 0.8rem 1rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbarUser:hover {
+    color: #FF6D1F;
+}
+
+.userIcon {
+    color: #FF6D1F;
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    background-color: #253847;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    min-width: 150px;
+    display: none;
+    z-index: 1000;
+}
+
+.navbarUser.active .dropdownMenu {
+    display: block;
+    margin-top: 5px;
+}
+
+.dropdownItem, .logoutButton {
+    color: #F9FFFF;
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: inherit;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+}
+
+.dropdownItem:hover, .logoutButton:hover {
+    background-color: #3a6073;
+    color: #FF6D1F;
+    cursor: pointer;
+}
 .menuIcon {
     display: none;
-}
-
-.animated-icon {
-    transition: transform 0.5s ease-in-out;
-}
-
-.fas.fa-times.animated-icon {
-    transform: rotate(180deg);
 }
 
 @media screen and (max-width: 1000px) {
@@ -116,7 +171,6 @@
     }
 
     .navbarLinks:hover {
-        background-color: transparent;
         color: #FF6D1F;
     }
 }
