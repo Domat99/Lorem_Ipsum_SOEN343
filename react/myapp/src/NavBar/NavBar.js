@@ -1,20 +1,50 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { menuNavbar } from "./MenuNavBar";
 import "./NavBar.css";
-import { Link } from "react-router-dom";
 
 class Navbar extends Component {
-    state = { isMenuOpen: false };
+    state = { isMenuOpen: false, isDropdownOpen: false };
 
     toggleMenu = () => {
         this.setState({ isMenuOpen: !this.state.isMenuOpen });
+    };
+
+    toggleDropdown = () => {
+        this.setState((prevState) => {
+            if (!prevState.isDropdownOpen) {
+                // Add event listener to close dropdown on outside click
+                document.addEventListener("mousedown", this.handleClickOutside);
+            } else {
+                document.removeEventListener("mousedown", this.handleClickOutside);
+            }
+            return { isDropdownOpen: !prevState.isDropdownOpen };
+        });
     };
 
     closeMenuOnLinkClick = () => {
         this.setState({ isMenuOpen: false });
     };
 
+    handleClickOutside = (event) => {
+        if (this.dropdownRef && !this.dropdownRef.contains(event.target)) {
+            this.setState({ isDropdownOpen: false });
+            document.removeEventListener("mousedown", this.handleClickOutside);
+        }
+    };
+
+    onLogout = () => {
+        const { setUser } = this.props;
+        if (setUser) {
+            setUser(null);
+            this.setState({ isDropdownOpen: false });
+            window.location.href = "/";
+        }
+    };
+
     render() {
+        const { user } = this.props;
+
         return (
             <nav className="navContainer">
                 <a href="/">
@@ -31,6 +61,27 @@ class Navbar extends Component {
                             </Link>
                         </li>
                     ))}
+                    <li ref={(node) => { this.dropdownRef = node; }}>
+                        {user ? (
+                            <div
+                                className={`navbarUser ${this.state.isDropdownOpen ? "active" : ""}`}
+                                onClick={this.toggleDropdown}
+                            >
+                                <i className="fa-solid fa-user userIcon"></i>
+                                <span>Welcome, <span className="userName">{user.name}</span></span>
+                                {this.state.isDropdownOpen && (
+                                    <div className="dropdownMenu">
+                                        <Link to="/profile" className="dropdownItem">Profile</Link>
+                                        <button onClick={this.onLogout} className="dropdownItem logoutButton">Logout</button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <Link to="/Login" className="navbarLinks" onClick={this.closeMenuOnLinkClick}>
+                                Log in
+                            </Link>
+                        )}
+                    </li>
                 </ul>
             </nav>
         );

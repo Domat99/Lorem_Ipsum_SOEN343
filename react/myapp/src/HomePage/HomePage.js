@@ -1,21 +1,18 @@
-import React, {useEffect } from "react";
-import "./HomePage.css";
+import React from "react";
 import HeroSection from "./HeroSection";
+import HowItWorks from "./HowItWorks";
+import Testimonials from "./Testimonials";
+
 
 function Home() {
-    useEffect(() => {
-        document.body.classList.add('homePageStyles');
-        return () => {
-            document.body.classList.remove('homePageStyles');
-        };
-    }, []);
-
     return (
         <>
-            <HeroSection />
+            <HeroSection/>
+            <Testimonials/>
+            <HowItWorks/>
+
         </>
     );
 }
 
 export default Home;
-

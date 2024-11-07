@@ -1,0 +1,151 @@
+/* Wrapper for sidebar and FAQ content */
+.faq-wrapper {
+    display: flex;
+    gap: 20px;
+    max-width: 1000px;
+
+    font-family: Arial, sans-serif;
+    color: #253847;
+    padding: 10%;
+
+}
+
+/* Sidebar styling */
+.faq-sidebar {
+    width: 40%;
+    background-color: transparent;
+    padding: 10%;
+    margin-left: 0;
+
+}
+
+/* Container for the FAQ section */
+.faq-container {
+    width: 60%;
+    padding: 10px;
+
+}
+
+/* Heading for the FAQ section */
+.faq-container h1 {
+    text-align: center;
+    color: #253847;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Individual FAQ item */
+.faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    cursor: pointer;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+/* Question styling */
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+    color: #000000;
+    margin-bottom: 10px;
+    transition: color 0.3s;
+}
+
+.faq-question:hover {
+    color: #E65817;
+}
+
+/* Arrow indicator */
+.arrow {
+    font-size: 0.8em;
+    color: #555;
+}
+
+/* Answer styling with transition */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.faq-answer.show {
+    opacity: 1;
+    max-height: 100px;
+    padding-top: 10px;
+}
+
+.faq-answer p {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.6;
+}
+
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .faq-wrapper {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .faq-sidebar, .faq-container {
+        width: 100%;
+    }
+
+    .faq-container h1 {
+        font-size: 1.8em;
+    }
+
+    .faq-question {
+        font-size: 1.1em;
+    }
+
+    .faq-answer p {
+        font-size: 0.95em;
+    }
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #E65817; /* Updated border color */
+    border-radius: 5px;
+    overflow: hidden;
+    max-width: 600px;
+    margin: 0 auto 20px;
+    background-color: #fff;
+}
+
+.faq-search-bar {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #333;
+}
+
+
+.faq-search-bar::placeholder {
+    color: #aaa;
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: none;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #E65817; /* Adjusted icon color */
+}
+
+.search-icon:hover {
+    background-color: #e5d5d5;
+}

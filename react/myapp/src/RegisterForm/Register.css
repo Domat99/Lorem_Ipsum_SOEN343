@@ -1,0 +1,155 @@
+.register-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 160px auto;
+    padding: 60px;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    background: linear-gradient(to bottom, #ffffff, #f7f7f7);
+
+}
+
+.register-container:hover {
+    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+}
+
+.register-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #253847;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.register-form {
+    margin-top: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #D9E1E8;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+    background-color: #f7f7f7;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+    border-color: #FF6D1F;
+    box-shadow: 0 0 5px rgba(255, 109, 31, 0.3);
+    outline: none;
+    background-color: #ffffff;
+}
+
+.terms {
+    font-size: 12px;
+    color: #555555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.terms a {
+    color: #FF6D1F;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.terms a:hover {
+    color: #E65817;
+}
+
+.register-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #FF6D1F;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+
+}
+
+.register-btn:hover {
+    background-color: #E65817;
+    transform: translateY(-2px);
+
+}
+
+.login-link {
+    color: #253847;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #FF6D1F;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.login-link a:hover {
+    color: #E65817;
+}
+
+@media (max-width: 768px) {
+    .register-container {
+        margin: 100px 20px;
+        padding: 40px;
+    }
+
+    .register-title {
+        font-size: 26px;
+    }
+
+    .register-btn {
+        font-size: 16px;
+
+    }
+}
+
+.terms {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5;
+}
+
+.terms-checkbox {
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    accent-color: #FF6D1F;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.terms a {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #FF6D1F;
+    transition: all 0.3s ease-in-out;
+}
+.terms a:hover {
+    color: #E65817;
+    text-decoration: none;
+}
