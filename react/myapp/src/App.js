@@ -8,6 +8,9 @@ import Login from './LogIn/LogIn';
 import Register from './RegisterForm/Register';
 import ScrollToTop from "./ScrollToTop";
 import './App.css'
+import FAQ from "./InfoPages/FAQ";
+import Support from "./InfoPages/Support";
+
 
 function App() {
     const [user, setUser] = useState(() => {
@@ -36,6 +39,10 @@ function App() {
                         <Route path="/Ship" element={<Shipping/>}/>
                         <Route path="/Login" element={<Login handleLogin={handleLogin}/>}/>
                         <Route path="/Register" element={<Register/>}/>
+                        <Route path="/FAQ" element={<FAQ/>}/>
+                        <Route path="/Support" element={<Support/>}/>
+
+
                     </Routes>
                 </div>
                 <Footer/>

@@ -6,10 +6,10 @@ const Footer = () => {
     return (
         <div className='footer-container'>
             <div className='footer-links'>
-                <Link to='/contact'>Contact Us</Link>
-                <Link to="/infopages/faq">FAQ</Link>
-                <Link to='/tracking'>Track Your Package</Link>
-                <Link to='/infopages/policy'>Policy</Link>
+                <Link to='/Support'>Contact Us</Link>
+                <Link to="/FAQ">FAQ</Link>
+                <Link to='/'>Track Your Package</Link>
+                <Link to='/TermsConditions'>Policy</Link>
 
             </div>
             <section className='social-media'>
