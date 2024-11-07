@@ -10,7 +10,7 @@ import ScrollToTop from "./ScrollToTop";
 import './App.css'
 import FAQ from "./InfoPages/FAQ";
 // import Support from "./InfoPages/Support";
-// import Policy from "./InfoPages/Policy";
+import Policy from "./InfoPages/Policy";
 
 
 
@@ -43,7 +43,7 @@ function App() {
                         <Route path="/Register" element={<Register/>}/>
                         <Route path="/FAQ" element={<FAQ/>}/>
                         {/*<Route path="/Support" element={<Support/>}/>*/}
-                        {/*<Route path="/Policy" element={<Policy/>}/>*/}
+                        <Route path="/Policy" element={<Policy/>}/>
 
 
 
