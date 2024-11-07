@@ -3,10 +3,11 @@
     max-width: 400px;
     margin: 160px auto;
     padding: 60px;
-    background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
+    background: linear-gradient(to bottom, #ffffff, #f7f7f7);
+
 }
 
 .register-container:hover {
@@ -79,11 +80,13 @@ input[type="text"]:focus {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+
 }
 
 .register-btn:hover {
     background-color: #E65817;
     transform: translateY(-2px);
+
 }
 
 .login-link {
@@ -116,5 +119,37 @@ input[type="text"]:focus {
 
     .register-btn {
         font-size: 16px;
+
     }
+}
+
+.terms {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5;
+}
+
+.terms-checkbox {
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    accent-color: #FF6D1F;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.terms a {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #FF6D1F;
+    transition: all 0.3s ease-in-out;
+}
+.terms a:hover {
+    color: #E65817;
+    text-decoration: none;
 }

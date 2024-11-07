@@ -9,7 +9,7 @@ const Footer = () => {
                 <Link to='/Support'>Contact Us</Link>
                 <Link to="/FAQ">FAQ</Link>
                 <Link to='/'>Track Your Package</Link>
-                <Link to='/TermsConditions'>Policy</Link>
+                <Link to='/Policy'>Privacy Policy</Link>
 
             </div>
             <section className='social-media'>

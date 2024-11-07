@@ -22,7 +22,7 @@ export const menuNavbar = [
         cName: "navbarLinks",
     }, {
         title: "Support",
-        url: "",
+        url: "/Support",
         cName: "navbarLinks",
     },
 ]
