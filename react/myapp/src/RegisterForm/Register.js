@@ -187,7 +187,7 @@ const Register = () => {
 
                     <h2>9. Contact Information</h2>
                     <p>
-                        If you have any questions or concerns about these terms, please visit our <a href="/Support">Contact
+                        If you have any questions or concerns about these terms, please visit our <a href="/ContactUs">Contact
                         Us</a> page or reach out to our support team.
                     </p>
 

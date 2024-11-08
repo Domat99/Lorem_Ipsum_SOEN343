@@ -11,6 +11,7 @@ import './App.css'
 import FAQ from "./InfoPages/FAQ";
 // import Support from "./InfoPages/Support";
 import Policy from "./InfoPages/Policy";
+import ContactUs from "./InfoPages/ContactUs";
 
 
 
@@ -44,6 +45,7 @@ function App() {
                         <Route path="/FAQ" element={<FAQ/>}/>
                         {/*<Route path="/Support" element={<Support/>}/>*/}
                         <Route path="/Policy" element={<Policy/>}/>
+                        <Route path="/ContactUs" element={<ContactUs/>}/>
 
 
 

@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './FAQ.css';
 
 const FAQ = () => {
     const [activeIndex, setActiveIndex] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate(); // Initialize navigate
 
     const toggleAnswer = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
+    const handleContactUsClick = () => {
+        navigate('/contactus'); // Navigate to Contact Us page
+    };
+
     const faqs = [
         {
             question: "How can I track my package?",
-            answer: `You can track your package on the <a href='/'>Home</a> page using the tracking number provided in your order confirmation email.`
+            answer: `You can track your package on the <a href='/'>Home</a> page using the tracking number provided in your order confirmation email, check our <a href='/Support'>Support</a> page for more details. `
         },
         {
             question: "What should I do if my package is delayed?",
-            answer: `If your package is delayed, please check the tracking details for updates. <a href='/Support'>Contact</a> our support team if the delay exceeds 3 days.`
+            answer: `If your package is delayed, please check the tracking details for updates. <a href='/ContactUs'>Contact</a> our support team if the delay exceeds 3 days.`
         },
         {
             question: "Can I change the delivery address after placing an order?",
-            answer: "Yes, you can change the delivery address within 24 hours of placing the order by <a href='/Support'>contacting</a> our support team."
+            answer: "Yes, you can change the delivery address within 24 hours of placing the order by <a href='/ContactUs'>contacting</a> our support team."
         },
         {
             question: "What delivery options do you offer?",
@@ -28,7 +34,7 @@ const FAQ = () => {
         },
         {
             question: "How do I file a claim for a damaged or lost package?",
-            answer: `To file a claim, <a href='/Support'>contact</a> our support team within 7 days of delivery.`
+            answer: `To file a claim, <a href='/ContactUs'>contact</a> our support team within 7 days of delivery.`
         },
         {
             question: "Can I schedule a specific delivery time?",
@@ -44,7 +50,7 @@ const FAQ = () => {
         },
         {
             question: "What is your return policy for damaged items?",
-            answer: `You can initiate a return within 30 days of delivery. Please <a href='/Support'>contact us</a> for more details and instructions.`
+            answer: `You can initiate a return within 30 days of delivery. Please <a href='/ContactUs'>contact us</a> for more details and instructions.`
         }
     ];
 
@@ -58,7 +64,7 @@ const FAQ = () => {
                 <h1>Get Help Tailored to You</h1>
                 <p><br />Sometimes, a little extra help can make all the difference.</p>
                 <p>Contact us for personalized assistance with your questions.<br /></p>
-                <button className="track-button">Contact Us</button>
+                <button className="track-button" onClick={handleContactUsClick}>Contact Us</button>
             </div>
 
             <div className="faq-container">
@@ -79,7 +85,7 @@ const FAQ = () => {
                             <h3
                                 tabIndex={0}
                                 onClick={() => toggleAnswer(index)}
-                                onKeyPress={(e) => {
+                                onKeyDown={(e) => {
                                     if (e.key === "Enter") {
                                         toggleAnswer(index);
                                     }
@@ -91,7 +97,7 @@ const FAQ = () => {
                             </h3>
                             <div
                                 className={`faq-answer ${activeIndex === index ? 'show' : ''}`}
-                                dangerouslySetInnerHTML={{ __html: faq.answer }}
+                                dangerouslySetInnerHTML={{__html: faq.answer}}
                                 style={{
                                     maxHeight: activeIndex === index ? '100px' : '0px',
                                     overflow: 'hidden',
