@@ -1,47 +1,106 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import "./ShippingStyle.css";
-import GoogleMapsService from '../GoogleMaps/GoogleMapsService'; // Assuming the GoogleMapsService class is in this directory
+import GoogleMapsService from '../GoogleMaps/GoogleMapsService';
 
-const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; // Load API key from environment
-const googleMapsService = new GoogleMapsService(apiKey); // Create an instance of the GoogleMapsService class
+const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+const googleMapsService = new GoogleMapsService(apiKey);
 
 const Shipping = () => {
+    const shipFromRef = useRef(null);
+    const shipToRef = useRef(null);
+    const packageInfoRef = useRef(null);
+    const shippingServiceRef = useRef(null);
+    const additionalOptionsRef = useRef(null);
+    const paymentRef = useRef(null);
+
     const [activeSection, setActiveSection] = useState(null);
     const [distance, setDistance] = useState(null);
 
-    // State to hold form input values
+    // State for "Ship From" section
+    const [fromCountry, setFromCountry] = useState('Canada');
     const [fromAddress, setFromAddress] = useState('');
+    const [fromName, setFromName] = useState('');
+    const [fromContact, setFromContact] = useState('');
+    const [fromCity, setFromCity] = useState('');
+    const [fromProvince, setFromProvince] = useState('');
+    const [fromPostalCode, setFromPostalCode] = useState('');
+    const [fromEmail, setFromEmail] = useState('');
+    const [fromPhone, setFromPhone] = useState('');
+    const [fromExtension, setFromExtension] = useState('');
+
+    // State for "Ship To" section
+    const [toCountry, setToCountry] = useState('Canada');
     const [toAddress, setToAddress] = useState('');
+    const [toName, setToName] = useState('');
+    const [toContact, setToContact] = useState('');
+    const [toCity, setToCity] = useState('');
+    const [toProvince, setToProvince] = useState('');
+    const [toPostalCode, setToPostalCode] = useState('');
+    const [toEmail, setToEmail] = useState('');
+    const [toPhone, setToPhone] = useState('');
+    const [toExtension, setToExtension] = useState('');
+
+    const [packageType, setPackageType] = useState('My Packaging');
+    const [packageWeight, setPackageWeight] = useState('');
+    const [packageLength, setPackageLength] = useState('');
+    const [packageWidth, setPackageWidth] = useState('');
+    const [packageHeight, setPackageHeight] = useState('');
+    const [packageValue, setPackageValue] = useState('');
+
 
     useEffect(() => {
-        // Load the Google Maps script when the component mounts
         googleMapsService.loadGoogleMapsScript();
     }, []);
 
     const toggleSection = (section) => {
-        setActiveSection(activeSection === section ? null : section);
+        const sectionRef = {
+            shipFrom: shipFromRef,
+            shipTo: shipToRef,
+            packageInfo: packageInfoRef,
+            shippingService: shippingServiceRef,
+            additionalOptions: additionalOptionsRef,
+            payment: paymentRef
+        }[section];
+
+        if (sectionRef && sectionRef.current && activeSection !== section) {
+            setActiveSection(section);
+
+
+            setTimeout(() => {
+                const yOffset = -100;
+                const yPosition = sectionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+                window.scrollTo({top: yPosition, behavior: 'smooth'});
+            }, 100);
+        } else {
+            setActiveSection(null);
+        }
     };
 
-    // Function to initialize Google Maps Autocomplete for a given input field
-    const handleAutocomplete = (inputElement, setValue) => {
+
+    const handleAutocomplete = (inputElement, setAddress) => {
         googleMapsService.initAutocomplete(inputElement, (place) => {
-            setValue(place.formatted_address);
+            setAddress(place.formatted_address);
         });
     };
 
-    // Function to calculate the distance between "Ship From" and "Ship To" addresses
     const calculateDistance = (e) => {
-        e.preventDefault(); // Prevent form submission and page reload
-        googleMapsService.calculateDistance(fromAddress, toAddress, (distance) => {
-            setDistance(distance);
-        });
+        e.preventDefault();
+        if (fromAddress && toAddress) {
+            googleMapsService.calculateDistance(fromAddress, toAddress, (distance) => {
+                setDistance(distance);
+            });
+        } else {
+            alert("Please enter both 'From' and 'To' addresses.");
+        }
     };
+
 
     return (
         <div className="shipping-page">
             <h1>Create a Shipment</h1>
             <div className="accordion">
-                <div className={`accordion-item ${activeSection === 'shipFrom' ? 'active' : ''}`}>
+                <div ref={shipFromRef} className={`accordion-item ${activeSection === 'shipFrom' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('shipFrom')}>
                         <h3>Ship From *</h3>
                         <i className={`fas ${activeSection === 'shipFrom' ? 'fa-chevron-up' : 'fa-chevron-down'} arrow`}></i>
@@ -51,94 +110,129 @@ const Shipping = () => {
                             <form>
                                 <div className="form-group">
                                     <label htmlFor="fromCountry">Country or Territory *</label>
-                                    <select id="fromCountry" name="fromCountry">
+                                    <select id="fromCountry" value={fromCountry}
+                                            onChange={(e) => setFromCountry(e.target.value)}>
                                         <option value="Canada">Canada</option>
                                     </select>
                                 </div>
-
-                                {/* Address Line 1 with Autocomplete */}
                                 <div className="form-group">
                                     <label htmlFor="fromAddress1">Address Line 1 *</label>
                                     <input
                                         type="text"
                                         id="fromAddress1"
                                         name="fromAddress1"
-                                        value={fromAddress} // Controlled input
+                                        value={fromAddress}
                                         onChange={(e) => setFromAddress(e.target.value)}
+                                        onFocus={(e) => handleAutocomplete(e.target, setFromAddress)}
                                         required
-                                        onFocus={(e) => handleAutocomplete(e.target, setFromAddress)} // Trigger autocomplete
                                     />
                                 </div>
-
-
                                 <div className="form-inline">
                                     <div className="form-group">
                                         <label htmlFor="fromName">Full Name or Company Name *</label>
-                                        <input type="text" id="fromName" name="fromName" required/>
+                                        <input
+                                            type="text"
+                                            id="fromName"
+                                            name="fromName"
+                                            value={fromName}
+                                            onChange={(e) => setFromName(e.target.value)}
+                                            required
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="fromContact">Contact Name</label>
-                                        <input type="text" id="fromContact" name="fromContact"/>
+                                        <input
+                                            type="text"
+                                            id="fromContact"
+                                            name="fromContact"
+                                            value={fromContact}
+                                            onChange={(e) => setFromContact(e.target.value)}
+                                        />
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="fromAddress1">Address Line 1 *</label>
-                                    <input type="text" id="fromAddress1" name="fromAddress1" required/>
+                                    <label htmlFor="fromCity">City *</label>
+                                    <input
+                                        type="text"
+                                        id="fromCity"
+                                        name="fromCity"
+                                        value={fromCity}
+                                        onChange={(e) => setFromCity(e.target.value)}
+                                        required
+                                    />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="fromAddress2">Address Line 2</label>
-                                    <input type="text" id="fromAddress2" name="fromAddress2"/>
+                                    <label htmlFor="fromProvince">Province *</label>
+                                    <select
+                                        id="fromProvince"
+                                        name="fromProvince"
+                                        value={fromProvince}
+                                        onChange={(e) => setFromProvince(e.target.value)}
+                                        required
+                                    >
+                                        <option value="">Select One</option>
+                                        <option value="Ontario">Ontario</option>
+                                        <option value="Quebec">Quebec</option>
+                                        <option value="Alberta">Alberta</option>
+                                        <option value="British Columbia">British Columbia</option>
+                                        <option value="Manitoba">Manitoba</option>
+                                        <option value="New Brunswick">New Brunswick</option>
+                                        <option value="Nova Scotia">Nova Scotia</option>
+                                        <option value="Nunavut">Nunavut</option>
+                                        <option value="Saskatchewan">Saskatchewan</option>
+                                        <option value="Yukon">Yukon</option>
+                                        <option value="Northwest Territories">Northwest Territories</option>
+                                    </select>
                                 </div>
-                                <div className="form-inline">
-                                    <div className="form-group">
-                                        <label htmlFor="fromCity">City *</label>
-                                        <input type="text" id="fromCity" name="fromCity" required/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="fromProvince">Province *</label>
-                                        <select id="fromProvince" name="fromProvince" required>
-                                            <option value="">Select One</option>
-                                            <option value="Ontario">Ontario</option>
-                                            <option value="Quebec">Quebec</option>
-                                            <option value="Alberta">Alberta</option>
-                                            <option value="British Columbia">British Columbia</option>
-                                            <option value="Manitoba">Manitoba</option>
-                                            <option value="New Brunswick">New Brunswick</option>
-                                            <option value="Manitoba">Manitoba</option>
-                                            <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
-                                            <option value="Nova Scotia">Nova Scotia</option>
-                                            <option value="Nunavut">Nunavut</option>
-                                            <option value="Saskatchewan">Saskatchewan</option>
-                                            <option value="Yukon">Yukon</option>
-                                            <option value="Northwest Territories">Northwest Territories</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="fromPostalCode">Postal Code *</label>
-                                        <input type="text" id="fromPostalCode" name="fromPostalCode" required/>
-                                    </div>
+                                <div className="form-group">
+                                    <label htmlFor="fromPostalCode">Postal Code *</label>
+                                    <input
+                                        type="text"
+                                        id="fromPostalCode"
+                                        name="fromPostalCode"
+                                        value={fromPostalCode}
+                                        onChange={(e) => setFromPostalCode(e.target.value)}
+                                        required
+                                    />
                                 </div>
-                                <div className="form-inline">
-                                    <div className="form-group">
-                                        <label htmlFor="fromEmail">Email *</label>
-                                        <input type="email" id="fromEmail" name="fromEmail" required/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="fromPhone">Phone *</label>
-                                        <input type="text" id="fromPhone" name="fromPhone" required/>
-                                        <span className="error-message">Phone is required.</span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="fromExtension">Extension</label>
-                                        <input type="text" id="fromExtension" name="fromExtension"/>
-                                    </div>
+                                <div className="form-group">
+                                    <label htmlFor="fromEmail">Email *</label>
+                                    <input
+                                        type="email"
+                                        id="fromEmail"
+                                        name="fromEmail"
+                                        value={fromEmail}
+                                        onChange={(e) => setFromEmail(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="fromPhone">Phone *</label>
+                                    <input
+                                        type="text"
+                                        id="fromPhone"
+                                        name="fromPhone"
+                                        value={fromPhone}
+                                        onChange={(e) => setFromPhone(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="fromExtension">Extension</label>
+                                    <input
+                                        type="text"
+                                        id="fromExtension"
+                                        name="fromExtension"
+                                        value={fromExtension}
+                                        onChange={(e) => setFromExtension(e.target.value)}
+                                    />
                                 </div>
                             </form>
                         </div>
                     )}
                 </div>
 
-                <div className={`accordion-item ${activeSection === 'shipTo' ? 'active' : ''}`}>
+                <div ref={shipToRef} className={`accordion-item ${activeSection === 'shipTo' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('shipTo')}>
                         <h3>Ship To *</h3>
                         <i className={`fas ${activeSection === 'shipTo' ? 'fa-chevron-up' : 'fa-chevron-down'} arrow`}></i>
@@ -148,14 +242,13 @@ const Shipping = () => {
                             <form>
                                 <div className="form-group">
                                     <label htmlFor="toCountry">Country or Territory *</label>
-                                    <select id="toCountry" name="toCountry">
+                                    <select id="toCountry" value={toCountry}
+                                            onChange={(e) => setToCountry(e.target.value)}>
                                         <option value="Canada">Canada</option>
                                         <option value="USA">USA</option>
                                         <option value="Argentina">Argentina</option>
                                     </select>
                                 </div>
-
-                                {/* Address Line 1 with Autocomplete */}
                                 <div className="form-group">
                                     <label htmlFor="toAddress">Address Line 1 *</label>
                                     <input
@@ -164,76 +257,70 @@ const Shipping = () => {
                                         name="toAddress"
                                         value={toAddress}
                                         onChange={(e) => setToAddress(e.target.value)}
-                                        onFocus={(e) => handleAutocomplete(e.target, setToAddress)}
+                                        onFocus={(e) => handleAutocomplete(e.target, setToAddress)} // Added for Autocomplete
                                         required
-
                                     />
                                 </div>
-
-
-                                <div className="form-inline">
-                                    <div className="form-group">
-                                        <label htmlFor="toName">Full Name or Company Name *</label>
-                                        <input type="text" id="toName" name="toName" required/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="toContact">Contact Name *</label>
-                                        <input type="text" id="toContact" name="toContact" required/>
-                                        <span className="error-message">Contact Name is required.</span>
-                                    </div>
+                                <div className="form-group">
+                                    <label htmlFor="toCity">City *</label>
+                                    <input
+                                        type="text"
+                                        id="toCity"
+                                        name="toCity"
+                                        value={toCity}
+                                        onChange={(e) => setToCity(e.target.value)}
+                                        required
+                                    />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="toAddress">Address Line 1 *</label>
-                                    <input type="text" id="toAddress" name="toAddress" required/>
+                                    <label htmlFor="toProvince">Province/State *</label>
+                                    <input
+                                        type="text"
+                                        id="toProvince"
+                                        name="toProvince"
+                                        value={toProvince}
+                                        onChange={(e) => setToProvince(e.target.value)}
+                                    />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="toAddress2">Address Line 2</label>
-                                    <input type="text" id="toAddress2" name="toAddress2"/>
+                                    <label htmlFor="toPostalCode">Postal Code *</label>
+                                    <input
+                                        type="text"
+                                        id="toPostalCode"
+                                        name="toPostalCode"
+                                        value={toPostalCode}
+                                        onChange={(e) => setToPostalCode(e.target.value)}
+                                        required
+                                    />
                                 </div>
-                                <div className="form-inline">
-                                    <div className="form-group">
-                                        <label htmlFor="toPostalCode">Postal Code *</label>
-                                        <input type="text" id="toPostalCode" name="toPostalCode" required/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="city">City *</label>
-                                        <input type="text" id="city" name="city" required/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="province">Province/State *</label>
-                                        <input type="text" id="province" name="province"/>
-                                    </div>
+                                <div className="form-group">
+                                    <label htmlFor="toEmail">Recipient Email *</label>
+                                    <input
+                                        type="email"
+                                        id="toEmail"
+                                        name="toEmail"
+                                        value={toEmail}
+                                        onChange={(e) => setToEmail(e.target.value)}
+                                        required
+                                    />
                                 </div>
-                                <div className="form-inline">
-                                    <div className="form-group">
-                                        <label htmlFor="toEmail">Recipient Email *</label>
-                                        <input type="email" id="toEmail" name="toEmail" required/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="toPhone">Recipient Phone *</label>
-                                        <input type="text" id="toPhone" name="toPhone" required/>
-                                        <span className="error-message">Recipient Phone is required.</span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="toExtension">Extension</label>
-                                        <input type="text" id="toExtension" name="toExtension"/>
-                                    </div>
+                                <div className="form-group">
+                                    <label htmlFor="toPhone">Recipient Phone *</label>
+                                    <input
+                                        type="text"
+                                        id="toPhone"
+                                        name="toPhone"
+                                        value={toPhone}
+                                        onChange={(e) => setToPhone(e.target.value)}
+                                        required
+                                    />
                                 </div>
-
-                                {/* Calculate Distance Button */}
-                                <div className="form-actions">
-                                    <button className="btn btn-primary" onClick={calculateDistance}>Calculate Distance</button>
-                                </div>
-
-                                {/* Display Distance */}
-                                {distance && <p>Distance: {distance}</p>}
-
                             </form>
                         </div>
                     )}
                 </div>
-
-                <div className={`accordion-item ${activeSection === 'packageInfo' ? 'active' : ''}`}>
+                <div ref={packageInfoRef}
+                     className={`accordion-item ${activeSection === 'packageInfo' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('packageInfo')}>
                         <h3>Package Information *</h3>
                         <i className={`fas ${activeSection === 'packageInfo' ? 'fa-chevron-up' : 'fa-chevron-down'} arrow`}></i>
@@ -244,27 +331,58 @@ const Shipping = () => {
                                 <h3>Package 1</h3>
                                 <div className="form-group">
                                     <label htmlFor="packageType">Packaging Type *</label>
-                                    <select id="packageType" name="packageType" required>
+                                    <select
+                                        id="packageType"
+                                        name="packageType"
+                                        value={packageType}
+                                        onChange={(e) => setPackageType(e.target.value)}
+                                        required
+                                    >
                                         <option value="My Packaging">My Packaging</option>
                                         <option value="Carrier Packaging">Carrier Packaging</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="packageWeight">Weight per Package (kg) *</label>
-                                    <input type="number" id="packageWeight" name="packageWeight" required/>
+                                    <input
+                                        type="number"
+                                        id="packageWeight"
+                                        name="packageWeight"
+                                        value={packageWeight}
+                                        onChange={(e) => setPackageWeight(e.target.value)}
+                                        min="0" required
+                                    />
                                 </div>
                                 <div className="form-inline">
                                     <div className="form-group">
                                         <label htmlFor="packageLength">Length (cm)</label>
-                                        <input type="number" id="packageLength" name="packageLength"/>
+                                        <input
+                                            type="number"
+                                            id="packageLength"
+                                            name="packageLength"
+                                            value={packageLength}
+                                            onChange={(e) => setPackageLength(e.target.value)}
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="packageWidth">Width (cm)</label>
-                                        <input type="number" id="packageWidth" name="packageWidth"/>
+                                        <input
+                                            type="number"
+                                            id="packageWidth"
+                                            name="packageWidth"
+                                            value={packageWidth}
+                                            onChange={(e) => setPackageWidth(e.target.value)}
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="packageHeight">Height (cm)</label>
-                                        <input type="number" id="packageHeight" name="packageHeight"/>
+                                        <input
+                                            type="number"
+                                            id="packageHeight"
+                                            name="packageHeight"
+                                            value={packageHeight}
+                                            onChange={(e) => setPackageHeight(e.target.value)}
+                                        />
                                     </div>
                                 </div>
                                 <div className="ship-tip">
@@ -272,15 +390,21 @@ const Shipping = () => {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="packageValue">Total Package Value (CAD)</label>
-                                    <input type="number" id="packageValue" name="packageValue"
-                                           placeholder="Enter value in CAD"/>
+                                    <input
+                                        type="number"
+                                        id="packageValue"
+                                        name="packageValue"
+                                        value={packageValue}
+                                        onChange={(e) => setPackageValue(e.target.value)}
+                                        placeholder="Enter value in CAD"
+                                    />
                                 </div>
                             </form>
                         </div>
                     )}
                 </div>
-
-                <div className={`accordion-item ${activeSection === 'shippingService' ? 'active' : ''}`}>
+                <div ref={shippingServiceRef}
+                     className={`accordion-item ${activeSection === 'shippingService' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('shippingService')}>
                         <h3>Shipping Service *</h3>
                         <i className={`fas ${activeSection === 'shippingService' ? 'fa-chevron-up' : 'fa-chevron-down'} arrow`}></i>
@@ -292,7 +416,8 @@ const Shipping = () => {
                     )}
                 </div>
 
-                <div className={`accordion-item ${activeSection === 'additionalOptions' ? 'active' : ''}`}>
+                <div ref={additionalOptionsRef}
+                     className={`accordion-item ${activeSection === 'additionalOptions' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('additionalOptions')}>
                         <h3>Additional Options</h3>
                         <i className={`fas ${activeSection === 'additionalOptions' ? 'fa-chevron-up' : 'fa-chevron-down'} arrow`}></i>
@@ -304,7 +429,7 @@ const Shipping = () => {
                     )}
                 </div>
 
-                <div className={`accordion-item ${activeSection === 'payment' ? 'active' : ''}`}>
+                <div ref={paymentRef} className={`accordion-item ${activeSection === 'payment' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('payment')}>
                         <h3>Payment *</h3>
                         <i className={`fas ${activeSection === 'payment' ? 'fa-chevron-up' : 'fa-chevron-down'} arrow`}></i>
@@ -328,7 +453,8 @@ const Shipping = () => {
                 <button className="btn btn-primary">Review and Continue</button>
             </div>
         </div>
-    );
+    )
+        ;
 };
 
 export default Shipping;
