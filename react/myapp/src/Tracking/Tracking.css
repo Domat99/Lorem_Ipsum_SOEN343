@@ -1,0 +1,65 @@
+.tracking-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.tracking-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #253847;
+}
+
+.form-group {
+    margin-top: 20px;
+}
+
+.tracking-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #D9E1E8;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f7f7f7;
+    margin-bottom: 15px;
+}
+
+.tracking-input:focus {
+    border-color: #FF6D1F;
+    outline: none;
+    background-color: #ffffff;
+}
+
+.tracking-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #FF6D1F;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.tracking-btn:hover {
+    background-color: #E65817;
+}
+
+.error-message {
+    color: #FF6D1F;
+    margin-top: 10px;
+}
+
+.shipment-info {
+    margin-top: 20px;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: left;
+}
