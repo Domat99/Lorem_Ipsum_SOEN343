@@ -1,6 +1,6 @@
 package com.Lorem_Ipsum_SOEN343.Lorem_Ipsum_SOEN343.User;
 
-import com.Lorem_Ipsum_SOEN343.Lorem_Ipsum_SOEN343.SecurityConfig;
+import com.Lorem_Ipsum_SOEN343.Lorem_Ipsum_SOEN343.security.SecurityConfig;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class UserService {
 
     public User createUser(User user) {
 
-        user.setPassword(SecurityConfig.hashPassword(user.getPassword()));
+        user.setPassword(SecurityConfig.getInstance().hashPassword(user.getPassword()));
         return userRepository.save(user);
 
     }
@@ -34,7 +34,7 @@ public class UserService {
                 .orElseThrow(() -> new Exception("User not found"));
 
         user.setName(userDetails.getName());
-        user.setPassword(SecurityConfig.hashPassword(userDetails.getPassword()));
+        user.setPassword(SecurityConfig.getInstance().hashPassword(userDetails.getPassword()));
         return userRepository.save(user);
     }
 
@@ -46,7 +46,7 @@ public class UserService {
         User user = userRepository.findByEmail(email);
         String hashedPassword;
 
-        hashedPassword = SecurityConfig.hashPassword(password);
+        hashedPassword = SecurityConfig.getInstance().hashPassword(password);
 
         if (user != null && user.getPassword().equals(hashedPassword)) {
             return user;
