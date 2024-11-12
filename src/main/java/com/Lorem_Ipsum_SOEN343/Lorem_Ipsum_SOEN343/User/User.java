@@ -6,6 +6,9 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document(collection = "user")
 public class User {
 
@@ -15,6 +18,8 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private List<ObjectId> deliveries = new ArrayList<>();
+
 
     public User(ObjectId id, String name, String email, String password) {
         this.id = id;
@@ -53,5 +58,17 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<ObjectId> getDeliveries() {
+        return deliveries;
+    }
+
+    public void setDeliveries(List<ObjectId> deliveries) {
+        this.deliveries = deliveries;
+    }
+
+    public void addDelivery(ObjectId deliveryId) {
+        this.deliveries.add(deliveryId);
     }
 }
