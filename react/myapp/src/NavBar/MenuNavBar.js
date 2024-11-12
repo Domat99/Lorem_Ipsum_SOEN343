@@ -13,7 +13,7 @@ export const menuNavbar = [
     },
     {
         title: "Quotation",
-        url: "",
+        url: "/Quotation",
         cName: "navbarLinks",
     },
     {
