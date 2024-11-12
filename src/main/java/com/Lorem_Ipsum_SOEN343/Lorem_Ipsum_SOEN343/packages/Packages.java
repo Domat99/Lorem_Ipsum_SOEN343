@@ -1,9 +1,16 @@
 package com.Lorem_Ipsum_SOEN343.Lorem_Ipsum_SOEN343.packages;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "package")
 public class Packages {
 
+    @Id
+    @JsonSerialize(using= ToStringSerializer.class)
     private ObjectId id;
     private double height;
     private double length;
@@ -52,6 +59,10 @@ public class Packages {
 
     public double getWeight() {
         return this.weight;
+    }
+
+    public double getSize(){
+        return this.height * this.length * this.width;
     }
 
     public void setWeight(double weight) {

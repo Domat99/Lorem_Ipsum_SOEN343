@@ -1,30 +1,43 @@
 package com.Lorem_Ipsum_SOEN343.Lorem_Ipsum_SOEN343.delivery;
 
-import com.Lorem_Ipsum_SOEN343.Lorem_Ipsum_SOEN343.packages.Packages;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
+@Document(collection = "delivery")
 public class Delivery {
 
+    @Id
+    @JsonSerialize(using= ToStringSerializer.class)
     private ObjectId id;
-    private Packages aPackage;
+    private ObjectId userId;
+    private ObjectId packageId;
     private String originAddress;
     private String destinationAddress;
     private double distance;
     private LocalDate deliveryDate;
     private int trackingNumber;
     private EnumStatus status;
+    private double estimatedPrice;
+    private String deliveryOption;
 
-    public Delivery(ObjectId id, Packages aPackage, String originAddress, String destinationAddress, double distance, LocalDate deliveryDate, int trackingNumber, EnumStatus status) {
+    public Delivery(ObjectId id, ObjectId packageId, String originAddress, String destinationAddress, double distance, LocalDate deliveryDate, int trackingNumber, EnumStatus status) {
         this.id = id;
-        this.aPackage = aPackage;
+        this.packageId = packageId;
         this.originAddress = originAddress;
         this.destinationAddress = destinationAddress;
         this.distance = distance;
         this.deliveryDate = deliveryDate;
         this.trackingNumber = trackingNumber;
         this.status = status;
+    }
+
+    public Delivery() {
+
     }
 
     public ObjectId getId() {
@@ -35,12 +48,12 @@ public class Delivery {
         this.id = id;
     }
 
-    public Packages getaPackage() {
-        return aPackage;
+    public ObjectId getPackageId() {
+        return packageId;
     }
 
-    public void setaPackage(Packages aPackage) {
-        this.aPackage = aPackage;
+    public void setPackageId(ObjectId packageId) {
+        this.packageId = packageId;
     }
 
     public String getOriginAddress() {
@@ -89,5 +102,29 @@ public class Delivery {
 
     public void setStatus(EnumStatus status) {
         this.status = status;
+    }
+
+    public ObjectId getUserId() {
+        return userId;
+    }
+
+    public void setUserId(ObjectId userId) {
+        this.userId = userId;
+    }
+
+    public double getEstimatedPrice() {
+        return estimatedPrice;
+    }
+
+    public void setEstimatedPrice(double estimatedPrice) {
+        this.estimatedPrice = estimatedPrice;
+    }
+
+    public String getDeliveryOption() {
+        return deliveryOption;
+    }
+
+    public void setDeliveryOption(String deliveryOption) {
+        this.deliveryOption = deliveryOption;
     }
 }
