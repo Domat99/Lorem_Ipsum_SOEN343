@@ -1,11 +1,24 @@
-package com.Lorem_Ipsum_SOEN343.Lorem_Ipsum_SOEN343;
+package com.Lorem_Ipsum_SOEN343.Lorem_Ipsum_SOEN343.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SecurityConfig {
 
-    public static String hashPassword(String password) {
+    private static SecurityConfig instance;
+
+    private SecurityConfig() {
+
+    }
+
+    public static synchronized SecurityConfig getInstance() {
+        if (instance == null) {
+            instance = new SecurityConfig();
+        }
+        return instance;
+    }
+
+    public String hashPassword(String password) {
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("SHA-256");
