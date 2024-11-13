@@ -57,7 +57,6 @@ public class DeliveryService {
         delivery.setTrackingNumber(trackingNumber);
         delivery.setStatus(EnumStatus.PENDING);
 
-        updateUserDeliveries(userId, delivery.getId());
         return delivery;
     }
 
@@ -70,7 +69,7 @@ public class DeliveryService {
                 .collect(Collectors.toList());
     }
 
-    private void updateUserDeliveries(ObjectId userId, ObjectId deliveryId) {
+    public void updateUserDeliveries(ObjectId userId, ObjectId deliveryId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         user.addDelivery(deliveryId);
         userRepository.save(user);
