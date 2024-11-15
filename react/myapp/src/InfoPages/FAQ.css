@@ -149,3 +149,31 @@
 .search-icon:hover {
     background-color: #e5d5d5;
 }
+
+/* Styling for links */
+.faq-answer a {
+    color: #FF6D1F; /* Orange color for links */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.faq-answer a:hover {
+    color: #E65817; /* Darker orange on hover */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow effect */
+    text-decoration: underline; /* Underline on hover for emphasis */
+}
+
+/* Sidebar links styling */
+.faq-sidebar a {
+    color: #FF6D1F;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.faq-sidebar a:hover {
+    color: #E65817;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    text-decoration: underline;
+}
