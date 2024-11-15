@@ -56,4 +56,9 @@ public class DeliveryControl {
     public boolean checkTrackingNumber(@RequestParam int trackingNumber) {
         return deliveryFacade.isTrackingNumberUnique(trackingNumber);
     }
+
+    @GetMapping("/status")
+    public Delivery getDeliveryStatus(@RequestParam int trackingNumber) {
+        return deliveryFacade.getDeliveryStatusByTrackingNumber(trackingNumber);
+    }
 }
