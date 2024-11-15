@@ -8,12 +8,12 @@ export const menuNavbar = [
     },
     {
         title: "Track",
-        url: "",
+        url: "/Tracking",
         cName: "navbarLinks",
     },
     {
         title: "Quotation",
-        url: "",
+        url: "/Quotation",
         cName: "navbarLinks",
     },
     {

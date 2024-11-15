@@ -1,0 +1,80 @@
+.policy-container {
+    max-width: 800px;
+    margin: 100px auto 40px auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px); /* Blur for glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #333;
+    line-height: 1.6;
+}
+
+.policy-container h1 {
+    color: #253847;
+    font-size: 2.5em;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.last-updated {
+    color: #2e4353;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 7%;
+
+}
+
+.intro-text {
+    font-size: 1.1em;
+    color: #000000;
+    margin-bottom: 30px;
+}
+
+.policy-container h2 {
+    color: #E65817;
+    font-size: 1.5em;
+    margin-top: 25px;
+    position: relative;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.policy-container h2::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: #E65817;
+    margin-top: 8px;
+    border-radius: 2px;
+}
+
+
+.policy-container ul {
+    list-style-type: decimal;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.policy-container ul li {
+    margin-bottom: 10px;
+}
+
+.policy-container a {
+    color: #E65817;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.policy-container a:hover {
+    text-decoration: underline;
+}
+

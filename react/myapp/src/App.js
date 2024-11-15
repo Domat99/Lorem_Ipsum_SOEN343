@@ -9,8 +9,15 @@ import Register from './RegisterForm/Register';
 import ScrollToTop from "./ScrollToTop";
 import './App.css'
 import FAQ from "./InfoPages/FAQ";
+import Tracking from "./Tracking/Tracking";
+import Quotation from "./Quotation/Quotation";
 // import Support from "./InfoPages/Support";
-// import Policy from "./InfoPages/Policy";
+import Policy from "./InfoPages/Policy";
+import ContactUs from "./InfoPages/ContactUs";
+import Profile from "./User/Profile";
+import AccountInfo from "./User/AccountInfo";
+import OrderHistory from "./User/OrderHistory";
+
 
 
 
@@ -39,11 +46,17 @@ function App() {
                     <Routes>
                         <Route path="/" element={<HomePage/>}/>
                         <Route path="/Ship" element={<Shipping/>}/>
+                        <Route path="/Tracking" element={<Tracking/>}/>
+                        <Route path="/Quotation" element={<Quotation/>}/>
                         <Route path="/Login" element={<Login handleLogin={handleLogin}/>}/>
                         <Route path="/Register" element={<Register/>}/>
                         <Route path="/FAQ" element={<FAQ/>}/>
                         {/*<Route path="/Support" element={<Support/>}/>*/}
-                        {/*<Route path="/Policy" element={<Policy/>}/>*/}
+                        <Route path="/Policy" element={<Policy/>}/>
+                        <Route path="/ContactUs" element={<ContactUs/>}/>
+                        <Route path="/Profile" element={<Profile/>}/>
+                        <Route path="/AccountInfo" element={<AccountInfo/>}/>
+                        <Route path="/OrderHistory" element={<OrderHistory/>}/>
 
 
 
