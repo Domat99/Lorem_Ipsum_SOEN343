@@ -1,0 +1,76 @@
+.support-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.support-container h1 {
+    font-size: 2.5em;
+    color: #253847;
+    margin-bottom: 10px;
+}
+
+.support-container p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.support-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.support-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s ease;
+    text-align: left;
+    cursor: pointer;
+}
+
+.support-card h2 {
+    font-size: 1.5em;
+    color: #253847;
+    margin-bottom: 10px;
+}
+
+.support-card p {
+    font-size: 1em;
+    color: #555;
+}
+
+.support-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.topic-steps {
+    margin-top: 10px;
+    color: #333;
+}
+
+.topic-steps ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+
+.topic-steps li {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+/* Active card styling */
+.support-card.active {
+    background-color: #f0f4ff; /* Slightly different background to indicate active card */
+    border-left: 4px solid #E65817;
+}
+
+.support-card.active h2 {
+    color: #E65817;
+}
