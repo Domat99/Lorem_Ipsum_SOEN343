@@ -58,11 +58,11 @@ public class DeliveryFacade {
         return !deliveryRepo.existsByTrackingNumber(trackingNumber);
     }
 
-    public EnumStatus getDeliveryStatusByTrackingNumber(int trackingNumber) {
+    public Delivery getDeliveryStatusByTrackingNumber(int trackingNumber) {
 
         Delivery delivery = deliveryRepo.findByTrackingNumber(trackingNumber)
                 .orElseThrow(() -> new RuntimeException("Delivery not found with tracking number: " + trackingNumber));
 
-        return delivery.getStatus();
+        return delivery;
     }
 }
