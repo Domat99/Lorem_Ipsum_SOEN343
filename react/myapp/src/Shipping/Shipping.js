@@ -1,9 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import "./ShippingStyle.css";
 import GoogleMapsService from '../GoogleMaps/GoogleMapsService';
+import ShippingService from "./ShippingService";
 
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 const googleMapsService = new GoogleMapsService(apiKey);
+const shippingService = new ShippingService();
 
 const Shipping = () => {
     const shipFromRef = useRef(null);
@@ -12,45 +14,103 @@ const Shipping = () => {
     const shippingServiceRef = useRef(null);
     const additionalOptionsRef = useRef(null);
     const paymentRef = useRef(null);
+    const [paymentMethod, setPaymentMethod] = useState('');
 
-    const [activeSection, setActiveSection] = useState(null);
+    const [activeSection, setActiveSection] = useState(sessionStorage.getItem('activeSection') || null);
     const [distance, setDistance] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
 
-    // State for "Ship From" section
-    const [fromCountry, setFromCountry] = useState('Canada');
-    const [fromAddress, setFromAddress] = useState('');
-    const [fromName, setFromName] = useState('');
-    const [fromContact, setFromContact] = useState('');
-    const [fromCity, setFromCity] = useState('');
-    const [fromProvince, setFromProvince] = useState('');
-    const [fromPostalCode, setFromPostalCode] = useState('');
-    const [fromEmail, setFromEmail] = useState('');
-    const [fromPhone, setFromPhone] = useState('');
-    const [fromExtension, setFromExtension] = useState('');
+    const [fromAddress, setFromAddress] = useState(sessionStorage.getItem('fromAddress') || '');
+    const [fromName, setFromName] = useState(sessionStorage.getItem('fromName') || '');
+    const [fromContact, setFromContact] = useState(sessionStorage.getItem('fromContact') || '');
+    const [fromEmail, setFromEmail] = useState(sessionStorage.getItem('fromEmail') || '');
+    const [fromPhone, setFromPhone] = useState(sessionStorage.getItem('fromPhone') || '');
+    const [fromExtension, setFromExtension] = useState(sessionStorage.getItem('fromExtension') || '');
 
-    // State for "Ship To" section
-    const [toCountry, setToCountry] = useState('Canada');
-    const [toAddress, setToAddress] = useState('');
-    const [toName, setToName] = useState('');
-    const [toContact, setToContact] = useState('');
-    const [toCity, setToCity] = useState('');
-    const [toProvince, setToProvince] = useState('');
-    const [toPostalCode, setToPostalCode] = useState('');
-    const [toEmail, setToEmail] = useState('');
-    const [toPhone, setToPhone] = useState('');
-    const [toExtension, setToExtension] = useState('');
+    const [toAddress, setToAddress] = useState(sessionStorage.getItem('toAddress') || '');
+    const [toEmail, setToEmail] = useState(sessionStorage.getItem('toEmail') || '');
+    const [toPhone, setToPhone] = useState(sessionStorage.getItem('toPhone') || '');
+    const [toExtension, setToExtension] = useState(sessionStorage.getItem('toExtension') || '');
 
-    const [packageType, setPackageType] = useState('My Packaging');
-    const [packageWeight, setPackageWeight] = useState('');
-    const [packageLength, setPackageLength] = useState('');
-    const [packageWidth, setPackageWidth] = useState('');
-    const [packageHeight, setPackageHeight] = useState('');
-    const [packageValue, setPackageValue] = useState('');
+    const [packageType, setPackageType] = useState(sessionStorage.getItem('packageType') || 'My Packaging');
+    const [packageWeight, setPackageWeight] = useState(sessionStorage.getItem('packageWeight') || '');
+    const [packageLength, setPackageLength] = useState(sessionStorage.getItem('packageLength') || '');
+    const [packageWidth, setPackageWidth] = useState(sessionStorage.getItem('packageWidth') || '');
+    const [packageHeight, setPackageHeight] = useState(sessionStorage.getItem('packageHeight') || '');
+    const [packageValue, setPackageValue] = useState(sessionStorage.getItem('packageValue') || '');
+    const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
+    const [estimatedPrice, setEstimatedPrice] = useState(null);
+
+    const packageSize = packageLength && packageWidth && packageHeight
+        ? packageLength * packageWidth * packageHeight
+        : null;
+
+    const [additionalOptions, setAdditionalOptions] = useState({
+        insurance: false,
+        signature: false,
+        specialHandling: false,
+    });
+
+    const handleAdditionalOptionChange = (event, option) => {
+        setAdditionalOptions((prevOptions) => ({
+            ...prevOptions,
+            [option]: event.target.checked,
+        }));
+    };
 
 
     useEffect(() => {
         googleMapsService.loadGoogleMapsScript();
     }, []);
+
+    useEffect(() => {
+        sessionStorage.setItem('fromAddress', fromAddress);
+        sessionStorage.setItem('fromName', fromName);
+        sessionStorage.setItem('fromContact', fromContact);
+        sessionStorage.setItem('fromEmail', fromEmail);
+        sessionStorage.setItem('fromPhone', fromPhone);
+        sessionStorage.setItem('fromExtension', fromExtension);
+
+        sessionStorage.setItem('toAddress', toAddress);
+        sessionStorage.setItem('toEmail', toEmail);
+        sessionStorage.setItem('toPhone', toPhone);
+        sessionStorage.setItem('toExtension', toExtension);
+
+        sessionStorage.setItem('packageType', packageType);
+        sessionStorage.setItem('packageWeight', packageWeight);
+        sessionStorage.setItem('packageLength', packageLength);
+        sessionStorage.setItem('packageWidth', packageWidth);
+        sessionStorage.setItem('packageHeight', packageHeight);
+        sessionStorage.setItem('packageValue', packageValue);
+
+        sessionStorage.setItem('activeSection', activeSection);
+    }, [
+        fromAddress, fromName, fromContact, fromEmail, fromPhone, fromExtension,
+        toAddress, toEmail, toPhone, toExtension,
+        packageType, packageWeight, packageLength, packageWidth, packageHeight, packageValue,
+        activeSection
+    ]);
+
+    const calculateDistance = () => {
+        return new Promise((resolve, reject) => {
+            if (fromAddress && toAddress) {
+                googleMapsService.calculateDistance(fromAddress, toAddress, (distance) => {
+                    if (distance !== null) {
+                        const numericDistance = parseFloat(distance.replace(/[^0-9.]/g, ''));
+                        setDistance(numericDistance);
+                        resolve(numericDistance);
+                    } else {
+                        setErrorMessage("Failed to calculate distance. Please try again.");
+                        reject(new Error("Failed to calculate distance"));
+                    }
+                });
+            } else {
+                setErrorMessage("Please enter both 'From' and 'To' addresses.");
+                reject(new Error("Addresses not provided"));
+            }
+        });
+    };
+
 
     const toggleSection = (section) => {
         const sectionRef = {
@@ -77,6 +137,53 @@ const Shipping = () => {
         }
     };
 
+    const calculatePrice = async () => {
+        setErrorMessage(null);
+
+        if (!selectedDeliveryOption) {
+            alert("Please select a delivery option.");
+            return;
+        }
+        if (!packageWeight) {
+            alert("Please enter the package weight.");
+            return;
+        }
+        if (!packageSize) {
+            alert("Please enter valid dimensions for the package.");
+            return;
+        }
+
+        try {
+            const calculatedDistance = distance || await calculateDistance();
+
+            console.log("Distance:", calculatedDistance);
+            console.log("Package Weight:", packageWeight);
+            console.log("Package Size:", packageSize);
+            console.log("Selected Delivery Option:", selectedDeliveryOption);
+
+            if (calculatedDistance) {
+                let basePrice = await shippingService.estimatePrice(
+                    calculatedDistance,
+                    packageWeight,
+                    packageSize,
+                    selectedDeliveryOption
+                );
+
+                if (additionalOptions.insurance) basePrice += 10;
+                if (additionalOptions.signature) basePrice += 2;
+                if (additionalOptions.specialHandling) basePrice += 7;
+
+                setEstimatedPrice(basePrice.toFixed(2));
+
+                console.log("Estimated Price with Modifiers:", basePrice.toFixed(2));
+            } else {
+                setErrorMessage("Distance calculation failed. Please check the addresses.");
+            }
+        } catch (error) {
+            setErrorMessage("Failed to calculate price. Please try again.");
+            console.error("Failed to calculate price:", error);
+        }
+    };
 
     const handleAutocomplete = (inputElement, setAddress) => {
         googleMapsService.initAutocomplete(inputElement, (place) => {
@@ -84,21 +191,11 @@ const Shipping = () => {
         });
     };
 
-    const calculateDistance = (e) => {
-        e.preventDefault();
-        if (fromAddress && toAddress) {
-            googleMapsService.calculateDistance(fromAddress, toAddress, (distance) => {
-                setDistance(distance);
-            });
-        } else {
-            alert("Please enter both 'From' and 'To' addresses.");
-        }
-    };
-
 
     return (
         <div className="shipping-page">
             <h1>Create a Shipment</h1>
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
             <div className="accordion">
                 <div ref={shipFromRef} className={`accordion-item ${activeSection === 'shipFrom' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('shipFrom')}>
@@ -108,13 +205,6 @@ const Shipping = () => {
                     {activeSection === 'shipFrom' && (
                         <div className="accordion-content">
                             <form>
-                                <div className="form-group">
-                                    <label htmlFor="fromCountry">Country or Territory *</label>
-                                    <select id="fromCountry" value={fromCountry}
-                                            onChange={(e) => setFromCountry(e.target.value)}>
-                                        <option value="Canada">Canada</option>
-                                    </select>
-                                </div>
                                 <div className="form-group">
                                     <label htmlFor="fromAddress1">Address Line 1 *</label>
                                     <input
@@ -149,51 +239,6 @@ const Shipping = () => {
                                             onChange={(e) => setFromContact(e.target.value)}
                                         />
                                     </div>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="fromCity">City *</label>
-                                    <input
-                                        type="text"
-                                        id="fromCity"
-                                        name="fromCity"
-                                        value={fromCity}
-                                        onChange={(e) => setFromCity(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="fromProvince">Province *</label>
-                                    <select
-                                        id="fromProvince"
-                                        name="fromProvince"
-                                        value={fromProvince}
-                                        onChange={(e) => setFromProvince(e.target.value)}
-                                        required
-                                    >
-                                        <option value="">Select One</option>
-                                        <option value="Ontario">Ontario</option>
-                                        <option value="Quebec">Quebec</option>
-                                        <option value="Alberta">Alberta</option>
-                                        <option value="British Columbia">British Columbia</option>
-                                        <option value="Manitoba">Manitoba</option>
-                                        <option value="New Brunswick">New Brunswick</option>
-                                        <option value="Nova Scotia">Nova Scotia</option>
-                                        <option value="Nunavut">Nunavut</option>
-                                        <option value="Saskatchewan">Saskatchewan</option>
-                                        <option value="Yukon">Yukon</option>
-                                        <option value="Northwest Territories">Northwest Territories</option>
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="fromPostalCode">Postal Code *</label>
-                                    <input
-                                        type="text"
-                                        id="fromPostalCode"
-                                        name="fromPostalCode"
-                                        value={fromPostalCode}
-                                        onChange={(e) => setFromPostalCode(e.target.value)}
-                                        required
-                                    />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="fromEmail">Email *</label>
@@ -241,15 +286,6 @@ const Shipping = () => {
                         <div className="accordion-content">
                             <form>
                                 <div className="form-group">
-                                    <label htmlFor="toCountry">Country or Territory *</label>
-                                    <select id="toCountry" value={toCountry}
-                                            onChange={(e) => setToCountry(e.target.value)}>
-                                        <option value="Canada">Canada</option>
-                                        <option value="USA">USA</option>
-                                        <option value="Argentina">Argentina</option>
-                                    </select>
-                                </div>
-                                <div className="form-group">
                                     <label htmlFor="toAddress">Address Line 1 *</label>
                                     <input
                                         type="text"
@@ -257,39 +293,7 @@ const Shipping = () => {
                                         name="toAddress"
                                         value={toAddress}
                                         onChange={(e) => setToAddress(e.target.value)}
-                                        onFocus={(e) => handleAutocomplete(e.target, setToAddress)} // Added for Autocomplete
-                                        required
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="toCity">City *</label>
-                                    <input
-                                        type="text"
-                                        id="toCity"
-                                        name="toCity"
-                                        value={toCity}
-                                        onChange={(e) => setToCity(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="toProvince">Province/State *</label>
-                                    <input
-                                        type="text"
-                                        id="toProvince"
-                                        name="toProvince"
-                                        value={toProvince}
-                                        onChange={(e) => setToProvince(e.target.value)}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="toPostalCode">Postal Code *</label>
-                                    <input
-                                        type="text"
-                                        id="toPostalCode"
-                                        name="toPostalCode"
-                                        value={toPostalCode}
-                                        onChange={(e) => setToPostalCode(e.target.value)}
+                                        onFocus={(e) => handleAutocomplete(e.target, setToAddress)}
                                         required
                                     />
                                 </div>
@@ -315,10 +319,21 @@ const Shipping = () => {
                                         required
                                     />
                                 </div>
+                                <div className="form-group">
+                                    <label htmlFor="toExtension">Extension</label>
+                                    <input
+                                        type="text"
+                                        id="toExtension"
+                                        name="toExtension"
+                                        value={toExtension}
+                                        onChange={(e) => setToExtension(e.target.value)}
+                                    />
+                                </div>
                             </form>
                         </div>
                     )}
                 </div>
+
                 <div ref={packageInfoRef}
                      className={`accordion-item ${activeSection === 'packageInfo' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('packageInfo')}>
@@ -350,8 +365,11 @@ const Shipping = () => {
                                         name="packageWeight"
                                         value={packageWeight}
                                         onChange={(e) => setPackageWeight(e.target.value)}
-                                        min="0" required
+                                        min="0.1"
+                                        max="20"
+                                        required
                                     />
+                                    <small>Minimum: 0.1 kg, Maximum: 20 kg</small>
                                 </div>
                                 <div className="form-inline">
                                     <div className="form-group">
@@ -362,7 +380,10 @@ const Shipping = () => {
                                             name="packageLength"
                                             value={packageLength}
                                             onChange={(e) => setPackageLength(e.target.value)}
+                                            min="5"
+                                            max="100"
                                         />
+                                        <small>Min: 5 cm, Max: 100 cm</small>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="packageWidth">Width (cm)</label>
@@ -372,7 +393,10 @@ const Shipping = () => {
                                             name="packageWidth"
                                             value={packageWidth}
                                             onChange={(e) => setPackageWidth(e.target.value)}
+                                            min="5"
+                                            max="100"
                                         />
+                                        <small>Min: 5 cm, Max: 100 cm</small>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="packageHeight">Height (cm)</label>
@@ -382,7 +406,10 @@ const Shipping = () => {
                                             name="packageHeight"
                                             value={packageHeight}
                                             onChange={(e) => setPackageHeight(e.target.value)}
+                                            min="5"
+                                            max="100"
                                         />
+                                        <small>Min: 5 cm, Max: 100 cm</small>
                                     </div>
                                 </div>
                                 <div className="ship-tip">
@@ -403,6 +430,7 @@ const Shipping = () => {
                         </div>
                     )}
                 </div>
+
                 <div ref={shippingServiceRef}
                      className={`accordion-item ${activeSection === 'shippingService' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('shippingService')}>
@@ -410,36 +438,150 @@ const Shipping = () => {
                         <i className={`fas ${activeSection === 'shippingService' ? 'fa-chevron-up' : 'fa-chevron-down'} arrow`}></i>
                     </div>
                     {activeSection === 'shippingService' && (
-                        <div className="accordion-content">
-                            <p>Form content for 'Shipping Service' section goes here...</p>
+                        <div className="accordion-content shipping-service">
+                            <form>
+                                {["Express", "Fast", "Standard"].map((option) => (
+                                    <div key={option} className="service-option">
+                                        <label className="service-label">
+                                            <input
+                                                type="radio"
+                                                name="shippingService"
+                                                value={option}
+                                                checked={selectedDeliveryOption === option}
+                                                onChange={() => setSelectedDeliveryOption(option)}
+                                                required
+                                            />
+                                            <span className="service-title">{option} Delivery</span>
+                                        </label>
+                                    </div>
+                                ))}
+                            </form>
+                            <button onClick={calculatePrice} className="btn btn-calculate">
+                                Calculate Prices
+                            </button>
+                            {estimatedPrice && (
+                                <p className="estimated-price">Estimated Price: ${estimatedPrice}</p>
+                            )}
                         </div>
                     )}
                 </div>
 
-                <div ref={additionalOptionsRef}
-                     className={`accordion-item ${activeSection === 'additionalOptions' ? 'active' : ''}`}>
+
+                <div
+                    ref={additionalOptionsRef}
+                    className={`accordion-item ${activeSection === 'additionalOptions' ? 'active' : ''}`}
+                >
                     <div className="accordion-title" onClick={() => toggleSection('additionalOptions')}>
                         <h3>Additional Options</h3>
                         <i className={`fas ${activeSection === 'additionalOptions' ? 'fa-chevron-up' : 'fa-chevron-down'} arrow`}></i>
                     </div>
                     {activeSection === 'additionalOptions' && (
                         <div className="accordion-content">
-                            <p>Form content for 'Additional Options' section goes here...</p>
+                            <form>
+                                <div className="form-group">
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            name="insurance"
+                                            onChange={(e) => handleAdditionalOptionChange(e, 'insurance')}
+                                        />
+                                        <span>Insurance (Add protection for valuable items)</span>
+                                    </label>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            name="signature"
+                                            onChange={(e) => handleAdditionalOptionChange(e, 'signature')}
+                                        />
+                                        <span>Signature Confirmation (Recipient's signature required)</span>
+                                    </label>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            name="specialHandling"
+                                            onChange={(e) => handleAdditionalOptionChange(e, 'specialHandling')}
+                                        />
+                                        <span>Special Handling (Fragile items, etc.)</span>
+                                    </label>
+                                </div>
+                            </form>
                         </div>
                     )}
                 </div>
-
                 <div ref={paymentRef} className={`accordion-item ${activeSection === 'payment' ? 'active' : ''}`}>
                     <div className="accordion-title" onClick={() => toggleSection('payment')}>
                         <h3>Payment *</h3>
                         <i className={`fas ${activeSection === 'payment' ? 'fa-chevron-up' : 'fa-chevron-down'} arrow`}></i>
                     </div>
                     {activeSection === 'payment' && (
-                        <div className="accordion-content">
-                            <p>Form content for 'Payment' section goes here...</p>
+                        <div className="accordion-content payment-section">
+                            <h3>Select Payment Method</h3>
+                            <div className="payment-option">
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="Credit Card"
+                                    onChange={() => setPaymentMethod('Credit Card')}
+                                    checked={paymentMethod === 'Credit Card'}
+                                />
+                                <label><i className="fas fa-credit-card"></i> Credit Card</label>
+                            </div>
+                            {paymentMethod === 'Credit Card' && (
+                                <form className="credit-card-form">
+                                    <div className="form-group">
+                                        <label>Card Number *</label>
+                                        <div className="input-with-icon">
+                                            <i className="fas fa-credit-card"></i>
+                                            <input type="text" placeholder="1234 5678 9012 3456"/>
+                                        </div>
+                                    </div>
+                                    <div className="expiry-cvv-group">
+                                        <div className="form-group">
+                                            <label>Expiry Date *</label>
+                                            <div className="input-with-icon">
+                                                <i className="far fa-calendar-alt"></i>
+                                                <input type="text" placeholder="MM/YY"/>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label>CVV *</label>
+                                            <div className="input-with-icon">
+                                                <i className="fas fa-lock"></i>
+                                                <input type="number" placeholder="123"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-group cardholder-name-group">
+                                        <label>Cardholder Name *</label>
+                                        <input type="text" placeholder="Name on Card"/>
+                                    </div>
+                                </form>
+                            )}
+                            <div className="payment-option">
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="PayPal"
+                                    onChange={() => setPaymentMethod('PayPal')}
+                                    checked={paymentMethod === 'PayPal'}
+                                />
+                                <label><i className="fab fa-paypal"></i> PayPal</label>
+                            </div>
+                            {paymentMethod === 'PayPal' && (
+                                <p className="payment-instruction">You will be redirected to PayPal to complete your
+                                    payment.</p>
+                            )}
                         </div>
                     )}
                 </div>
+
+
             </div>
 
             <div className="terms">
