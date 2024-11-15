@@ -58,7 +58,7 @@ public class DeliveryControl {
     }
 
     @GetMapping("/status")
-    public EnumStatus getDeliveryStatus(@RequestParam int trackingNumber) {
+    public Delivery getDeliveryStatus(@RequestParam int trackingNumber) {
         return deliveryFacade.getDeliveryStatusByTrackingNumber(trackingNumber);
     }
 }
