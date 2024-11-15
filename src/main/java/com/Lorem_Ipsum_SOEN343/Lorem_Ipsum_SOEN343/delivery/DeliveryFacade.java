@@ -27,13 +27,13 @@ public class DeliveryFacade {
 
     public Delivery createDelivery(ObjectId userId, String deliveryOption, double distance, String originAddress, String destinationAddress, Packages pkg, int trackingNumber) {
         double estimatedPrice = priceEstimatorService.calculatePrice(distance, pkg.getWeight(), pkg.getSize(), deliveryOption);
-
         pkg = packageRepo.save(pkg);
 
         Delivery delivery = deliveryService.createDelivery(pkg, userId, deliveryOption, distance, originAddress, destinationAddress, trackingNumber);
         delivery.setEstimatedPrice(estimatedPrice);
-
-        return deliveryRepo.save(delivery);
+        deliveryRepo.save(delivery);
+        deliveryService.updateUserDeliveries(userId, delivery.getId());
+        return delivery;
     }
 
     public double estimatePrice(double distance, double weight, double size, String deliveryOption) {
@@ -56,5 +56,13 @@ public class DeliveryFacade {
 
     public boolean isTrackingNumberUnique(int trackingNumber) {
         return !deliveryRepo.existsByTrackingNumber(trackingNumber);
+    }
+
+    public Delivery getDeliveryStatusByTrackingNumber(int trackingNumber) {
+
+        Delivery delivery = deliveryRepo.findByTrackingNumber(trackingNumber)
+                .orElseThrow(() -> new RuntimeException("Delivery not found with tracking number: " + trackingNumber));
+
+        return delivery;
     }
 }

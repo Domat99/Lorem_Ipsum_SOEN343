@@ -9,6 +9,8 @@ import Register from './RegisterForm/Register';
 import ScrollToTop from "./ScrollToTop";
 import './App.css'
 import FAQ from "./InfoPages/FAQ";
+import Tracking from "./Tracking/Tracking";
+import Quotation from "./Quotation/Quotation";
 // import Support from "./InfoPages/Support";
 import Policy from "./InfoPages/Policy";
 import ContactUs from "./InfoPages/ContactUs";
@@ -44,6 +46,8 @@ function App() {
                     <Routes>
                         <Route path="/" element={<HomePage/>}/>
                         <Route path="/Ship" element={<Shipping/>}/>
+                        <Route path="/Tracking" element={<Tracking/>}/>
+                        <Route path="/Quotation" element={<Quotation/>}/>
                         <Route path="/Login" element={<Login handleLogin={handleLogin}/>}/>
                         <Route path="/Register" element={<Register/>}/>
                         <Route path="/FAQ" element={<FAQ/>}/>
