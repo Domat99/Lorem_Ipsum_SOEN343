@@ -11,12 +11,11 @@ import './App.css'
 import FAQ from "./InfoPages/FAQ";
 import Tracking from "./Tracking/Tracking";
 import Quotation from "./Quotation/Quotation";
-// import Support from "./InfoPages/Support";
+import Support from "./InfoPages/Support";
 import Policy from "./InfoPages/Policy";
 import ContactUs from "./InfoPages/ContactUs";
 import Profile from "./User/Profile";
-import AccountInfo from "./User/AccountInfo";
-import OrderHistory from "./User/OrderHistory";
+// import Review from "./User/Review";
 
 
 
@@ -51,12 +50,12 @@ function App() {
                         <Route path="/Login" element={<Login handleLogin={handleLogin}/>}/>
                         <Route path="/Register" element={<Register/>}/>
                         <Route path="/FAQ" element={<FAQ/>}/>
-                        {/*<Route path="/Support" element={<Support/>}/>*/}
+                        <Route path="/Support" element={<Support/>}/>
                         <Route path="/Policy" element={<Policy/>}/>
                         <Route path="/ContactUs" element={<ContactUs/>}/>
                         <Route path="/Profile" element={<Profile/>}/>
-                        <Route path="/AccountInfo" element={<AccountInfo/>}/>
-                        <Route path="/OrderHistory" element={<OrderHistory/>}/>
+                        {/*<Route path="/Review" element={<Review/>}/>*/}
+
 
 
 
