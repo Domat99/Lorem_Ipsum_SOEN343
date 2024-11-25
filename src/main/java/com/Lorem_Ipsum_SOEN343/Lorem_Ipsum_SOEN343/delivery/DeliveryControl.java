@@ -64,4 +64,13 @@ public class DeliveryControl {
     public Delivery getDeliveryStatus(@RequestParam int trackingNumber) {
         return deliveryFacade.getDeliveryStatusByTrackingNumber(trackingNumber);
     }
+
+    @GetMapping("/generate-tracking-number")
+    public int generateTrackingNumber() {
+        int trackingNumber;
+        do {
+            trackingNumber = (int) (Math.random() * 900000) + 100000;
+        } while (!deliveryFacade.isTrackingNumberUnique(trackingNumber));
+        return trackingNumber;
+    }
 }
