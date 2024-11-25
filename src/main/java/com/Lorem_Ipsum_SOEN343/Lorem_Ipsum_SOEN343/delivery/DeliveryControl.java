@@ -27,9 +27,12 @@ public class DeliveryControl {
             @RequestParam double distance,
             @RequestParam String originAddress,
             @RequestParam String destinationAddress,
-            @RequestParam int trackingNumber) {
+            @RequestParam int trackingNumber,
+            @RequestParam boolean insurance,
+            @RequestParam boolean specialHandling,
+            @RequestParam boolean signatureRequired) {
 
-        return deliveryFacade.createDelivery(userId, deliveryOption, distance, originAddress, destinationAddress, pkg, trackingNumber);
+        return deliveryFacade.createDelivery(userId, deliveryOption, distance, originAddress, destinationAddress, pkg, trackingNumber, insurance, specialHandling, signatureRequired);
     }
 
     @GetMapping("/estimate")

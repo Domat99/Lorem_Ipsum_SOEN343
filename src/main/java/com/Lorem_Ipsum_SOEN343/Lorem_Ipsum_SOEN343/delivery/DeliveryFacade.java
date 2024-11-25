@@ -25,11 +25,11 @@ public class DeliveryFacade {
         this.priceEstimatorService = priceEstimatorService;
     }
 
-    public Delivery createDelivery(ObjectId userId, String deliveryOption, double distance, String originAddress, String destinationAddress, Packages pkg, int trackingNumber) {
+    public Delivery createDelivery(ObjectId userId, String deliveryOption, double distance, String originAddress, String destinationAddress, Packages pkg, int trackingNumber, boolean insurance, boolean specialHandling, boolean signatureRequired) {
         double estimatedPrice = priceEstimatorService.calculatePrice(distance, pkg.getWeight(), pkg.getSize(), deliveryOption);
         pkg = packageRepo.save(pkg);
 
-        Delivery delivery = deliveryService.createDelivery(pkg, userId, deliveryOption, distance, originAddress, destinationAddress, trackingNumber);
+        Delivery delivery = deliveryService.createDelivery(pkg, userId, deliveryOption, distance, originAddress, destinationAddress, trackingNumber, insurance, specialHandling, signatureRequired);
         delivery.setEstimatedPrice(estimatedPrice);
         deliveryRepo.save(delivery);
         deliveryService.updateUserDeliveries(userId, delivery.getId());

@@ -35,8 +35,7 @@ public class DeliveryService {
         return priceEstimatorService.calculatePrice(distance, weight, size, deliveryOption);
     }
 
-    public Delivery createDelivery(Packages pkg, ObjectId userId, String deliveryOption, double distance, String originAddress, String destinationAddress, int trackingNumber) {
-        double estimatedPrice = getPriceEstimation(distance, pkg.getWeight(), pkg.getSize(), deliveryOption);
+    public Delivery createDelivery(Packages pkg, ObjectId userId, String deliveryOption, double distance, String originAddress, String destinationAddress, int trackingNumber, boolean insurance, boolean specialHandling, boolean signatureRequired) {
         LocalDate currentDate = LocalDate.now();
         LocalDate deliveryDate = switch (deliveryOption) {
             case "Express" -> currentDate.plusDays(2);
@@ -48,7 +47,6 @@ public class DeliveryService {
         Delivery delivery = new Delivery();
         delivery.setPackageId(pkg.getId());
         delivery.setUserId(userId);
-        delivery.setEstimatedPrice(estimatedPrice);
         delivery.setDeliveryOption(deliveryOption);
         delivery.setDistance(distance);
         delivery.setOriginAddress(originAddress);
@@ -56,6 +54,9 @@ public class DeliveryService {
         delivery.setDeliveryDate(deliveryDate);
         delivery.setTrackingNumber(trackingNumber);
         delivery.setStatus(EnumStatus.PENDING);
+        delivery.setInsurance(insurance);
+        delivery.setSpecialHandling(specialHandling);
+        delivery.setSignatureRequired(signatureRequired);
 
         return delivery;
     }
