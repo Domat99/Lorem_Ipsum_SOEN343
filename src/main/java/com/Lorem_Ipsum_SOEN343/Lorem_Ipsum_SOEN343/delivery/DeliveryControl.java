@@ -22,14 +22,17 @@ public class DeliveryControl {
     @PostMapping("/create")
     public Delivery createDelivery(
             @RequestBody Packages pkg,
-            @RequestParam ObjectId userId,
+            @RequestParam(required = false)  ObjectId userId,
             @RequestParam String deliveryOption,
             @RequestParam double distance,
             @RequestParam String originAddress,
             @RequestParam String destinationAddress,
-            @RequestParam int trackingNumber) {
+            @RequestParam int trackingNumber,
+            @RequestParam boolean insurance,
+            @RequestParam boolean specialHandling,
+            @RequestParam boolean signatureRequired) {
 
-        return deliveryFacade.createDelivery(userId, deliveryOption, distance, originAddress, destinationAddress, pkg, trackingNumber);
+        return deliveryFacade.createDelivery(userId, deliveryOption, distance, originAddress, destinationAddress, pkg, trackingNumber, insurance, specialHandling, signatureRequired);
     }
 
     @GetMapping("/estimate")
@@ -60,5 +63,14 @@ public class DeliveryControl {
     @GetMapping("/status")
     public Delivery getDeliveryStatus(@RequestParam int trackingNumber) {
         return deliveryFacade.getDeliveryStatusByTrackingNumber(trackingNumber);
+    }
+
+    @GetMapping("/generate-tracking-number")
+    public int generateTrackingNumber() {
+        int trackingNumber;
+        do {
+            trackingNumber = (int) (Math.random() * 900000) + 100000;
+        } while (!deliveryFacade.isTrackingNumberUnique(trackingNumber));
+        return trackingNumber;
     }
 }
