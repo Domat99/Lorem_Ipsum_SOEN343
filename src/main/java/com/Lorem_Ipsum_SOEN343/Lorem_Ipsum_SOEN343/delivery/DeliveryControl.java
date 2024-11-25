@@ -22,7 +22,7 @@ public class DeliveryControl {
     @PostMapping("/create")
     public Delivery createDelivery(
             @RequestBody Packages pkg,
-            @RequestParam ObjectId userId,
+            @RequestParam(required = false)  ObjectId userId,
             @RequestParam String deliveryOption,
             @RequestParam double distance,
             @RequestParam String originAddress,

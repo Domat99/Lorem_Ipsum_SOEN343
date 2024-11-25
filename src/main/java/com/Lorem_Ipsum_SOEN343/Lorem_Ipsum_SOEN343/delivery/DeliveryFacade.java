@@ -32,7 +32,10 @@ public class DeliveryFacade {
         Delivery delivery = deliveryService.createDelivery(pkg, userId, deliveryOption, distance, originAddress, destinationAddress, trackingNumber, insurance, specialHandling, signatureRequired);
         delivery.setEstimatedPrice(estimatedPrice);
         deliveryRepo.save(delivery);
-        deliveryService.updateUserDeliveries(userId, delivery.getId());
+        if(userId != null){
+            deliveryService.updateUserDeliveries(userId, delivery.getId());
+        }
+
         return delivery;
     }
 
