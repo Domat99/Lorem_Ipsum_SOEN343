@@ -14,6 +14,73 @@
     font-weight: bold;
 }
 
+.shipping-service {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.shipping-service h3 {
+    font-size: 1.25em;
+    margin-bottom: 15px;
+}
+
+.service-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.service-option label {
+    font-size: 1em;
+    margin-left: 8px;
+    color: #333;
+}
+
+.service-title {
+    font-weight: bold;
+}
+
+.tooltip {
+    font-size: 0.85em;
+    color: #888;
+}
+
+.btn-calculate {
+    background-color: #FF6D1F;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-calculate:hover {
+    background-color: #E65817;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.estimated-price {
+    font-size: 1.1em;
+    margin-top: 15px;
+    color: #333;
+    font-weight: bold;
+}
+
+.error-message {
+    color: #E65817;
+    background-color: #FFE9E4;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+
 .accordion {
     margin-bottom: 40px;
 }
@@ -140,6 +207,21 @@
     border-bottom: 4px solid #D9E1E8;
 }
 
+.accordion-content .form-group {
+    margin: 10px 0;
+}
+
+.accordion-content label {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+
+.accordion-content input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+
 .progress-step.active {
     color: #FF6D1F;
     border-bottom: 4px solid #FF6D1F;
@@ -207,9 +289,101 @@
     gap: 10px;
     margin-top: 20px;
 }
+/* Payment section container styling */
+.payment-section {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Title styling */
+.payment-section h3 {
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Payment options styling */
+.payment-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.payment-option label {
+    margin-left: 8px;
+    color: #444;
+}
+
+/* Radio button styling */
+.payment-option input[type="radio"] {
+    transform: scale(1.2);
+    accent-color: #ff6d1f; /* Match the orange theme */
+}
+
+/* Instruction message styling */
+.payment-instruction {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* Credit Card form styling */
+.credit-card-form {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 15px;
+}
+
+.credit-card-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.credit-card-form label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+/* Input field styling */
+.credit-card-form input[type="text"],
+.credit-card-form input[type="number"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.credit-card-form input[type="text"]:focus,
+.credit-card-form input[type="number"]:focus {
+    border-color: #ff6d1f;
+}
+
+/* Expiry date and CVV styling */
+.expiry-cvv-group {
+    display: flex;
+    gap: 15px;
+}
+
+/* Cardholder name full-width input */
+.cardholder-name-group {
+    grid-column: span 2;
+}
 
 
 @media (max-width: 768px) {
+    .credit-card-form {
+        grid-template-columns: 1fr;
+    }
     .shipping-page {
         width: 95%;
         margin: 20px auto;
