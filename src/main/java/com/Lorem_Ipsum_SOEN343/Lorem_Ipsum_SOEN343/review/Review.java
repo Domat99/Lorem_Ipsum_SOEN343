@@ -12,6 +12,7 @@ public class Review {
     @Id
     @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId deliveryId;
     private double rating;
     private String description;

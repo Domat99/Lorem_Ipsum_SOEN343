@@ -25,6 +25,17 @@ public class Packages {
         this.weight = weight;
     }
 
+    public Packages(double height, double length, double width, double weight) {
+        this.height = height;
+        this.length = length;
+        this.width = width;
+        this.weight = weight;
+    }
+
+    public Packages(){
+
+    }
+
     public ObjectId getId() {
         return this.id;
     }
