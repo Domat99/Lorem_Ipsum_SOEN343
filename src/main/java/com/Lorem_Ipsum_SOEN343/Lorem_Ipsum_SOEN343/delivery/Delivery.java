@@ -24,8 +24,11 @@ public class Delivery {
     private EnumStatus status;
     private double estimatedPrice;
     private String deliveryOption;
+    private boolean insurance;
+    private boolean specialHandling;
+    private boolean signatureRequired;
 
-    public Delivery(ObjectId id, ObjectId packageId, String originAddress, String destinationAddress, double distance, LocalDate deliveryDate, int trackingNumber, EnumStatus status) {
+    public Delivery(ObjectId id, ObjectId packageId, String originAddress, String destinationAddress, double distance, LocalDate deliveryDate, int trackingNumber, EnumStatus status, boolean insurance, boolean specialHandling, boolean signatureRequired) {
         this.id = id;
         this.packageId = packageId;
         this.originAddress = originAddress;
@@ -34,6 +37,9 @@ public class Delivery {
         this.deliveryDate = deliveryDate;
         this.trackingNumber = trackingNumber;
         this.status = status;
+        this.insurance = insurance;
+        this.specialHandling = specialHandling;
+        this.signatureRequired = signatureRequired;
     }
 
     public Delivery() {
@@ -126,5 +132,29 @@ public class Delivery {
 
     public void setDeliveryOption(String deliveryOption) {
         this.deliveryOption = deliveryOption;
+    }
+
+    public boolean isInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(boolean insurance) {
+        this.insurance = insurance;
+    }
+
+    public boolean isSpecialHandling() {
+        return specialHandling;
+    }
+
+    public void setSpecialHandling(boolean specialHandling) {
+        this.specialHandling = specialHandling;
+    }
+
+    public boolean isSignatureRequired() {
+        return signatureRequired;
+    }
+
+    public void setSignatureRequired(boolean signatureRequired) {
+        this.signatureRequired = signatureRequired;
     }
 }
