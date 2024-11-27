@@ -32,10 +32,23 @@ const Quotation = () => {
         ? packageLength * packageWidth * packageHeight
         : null;
 
-    const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
-    const [estimatedPrice, setEstimatedPrice] = useState(null);
+    // const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
+    // const [estimatedPrice, setEstimatedPrice] = useState(null);
 
-    // Save state toAddress sessionStorage on each change
+
+    // useEffect(() => {
+    //     sessionStorage.clear();
+    //     googleMapsService.loadGoogleMapsScript(() => {
+    //         initializeAutocomplete(fromInputRef.current, setFromAddress, 'from');
+    //         initializeAutocomplete(toInputRef.current, setToAddress, 'to');
+    //     });
+    // }, []);
+
+    useEffect(() => {
+        googleMapsService.loadGoogleMapsScript();
+    }, []);
+
+
     useEffect(() => {
         sessionStorage.setItem('from', fromAddress);
         sessionStorage.setItem('to', toAddress);
@@ -46,17 +59,19 @@ const Quotation = () => {
         sessionStorage.setItem('activeSection', activeSection);
     }, [fromAddress, toAddress, packageWeight, packageLength, packageWidth, packageHeight, activeSection]);
 
-    // Initialize Google Maps Autocomplete for address fields
-    useEffect(() => {
-        sessionStorage.clear();
-        googleMapsService.loadGoogleMapsScript(() => {
-            initializeAutocomplete(fromInputRef.current, setFromAddress, 'fromAddress');
-            initializeAutocomplete(toInputRef.current, setToAddress, 'toAddress');
-        });
-    }, []);
+    // useEffect(() => {
+    //     if (fromAddress && toAddress) {
+    //         calculateDistance().catch((error) => {
+    //             console.error("Failed to calculate distance:", error);
+    //         });
+    //     } else {
+    //         setDistance(null); // Clear distance if addresses are incomplete
+    //     }
+    // }, [fromAddress, toAddress]);
+
 
     const initializeAutocomplete = (input, setAddress) => {
-        if (!input) return;
+        // if (!input) return;
 
         const autocomplete = new window.google.maps.places.Autocomplete(input);
         autocomplete.setFields(['formatted_address']);
@@ -91,6 +106,8 @@ const Quotation = () => {
 
     const calculatePrice = async () => {
         setErrorMessage(null);
+        console.log(fromAddress)
+        console.log(toAddress)
 
         if (!packageWeight) {
             alert("Please enter the package weight.");
@@ -102,12 +119,18 @@ const Quotation = () => {
         }
 
         try {
-            const calculatedDistance = distance || await calculateDistance();
+            // await calculateDistance();
+            // const calculatedDistance = distance || await calculateDistance();
+            const calculatedDistance = await calculateDistance();
+            // const calculatedDistance = distance;
 
+            console.log("ADDRESSES:")
+            console.log(fromAddress)
+            console.log(toAddress)
             console.log("Distance:", calculatedDistance);
             console.log("Package Weight:", packageWeight);
             console.log("Package Size:", packageSize);
-            console.log("Selected Delivery Option:", selectedDeliveryOption);
+            // console.log("Selected Delivery Option:", selectedDeliveryOption);
 
             if (calculatedDistance) {
                 let basePriceExpress = await quoteService.getQuote(
@@ -134,9 +157,9 @@ const Quotation = () => {
                 setPriceFast(basePriceFast.toFixed(2));
                 setPriceStandard(basePriceStandard.toFixed(2));
 
-                console.log("Estimated Price with Modifiers:", basePriceExpress.toFixed(2));
-                console.log("Estimated Price with Modifiers:", basePriceFast.toFixed(2));
-                console.log("Estimated Price with Modifiers:", basePriceStandard.toFixed(2));
+                console.log("Estimated Price with basePriceExpress:", basePriceExpress.toFixed(2));
+                console.log("Estimated Price with basePriceFast:", basePriceFast.toFixed(2));
+                console.log("Estimated Price with basePriceStandard:", basePriceStandard.toFixed(2));
             } else {
                 setErrorMessage("Distance calculation failed. Please check the addresses.");
             }
@@ -293,7 +316,7 @@ const Quotation = () => {
                     // ref={fromInputRef}
                     type="text"
                     id="fromAddressQuote"
-                    placeholder="From*"
+                    placeholder="From"
                     value={fromAddress}
                     onChange={(e) => setFromAddress(e.target.value)}
                     onFocus={(e) => handleAutocomplete(e.target, setFromAddress)}
@@ -305,7 +328,7 @@ const Quotation = () => {
                     // ref={toInputRef}
                     type="text"
                     id="toAddressQuote"
-                    placeholder="To*"
+                    placeholder="To"
                     value={toAddress}
                     onChange={(e) => setToAddress(e.target.value)}
                     onFocus={(e) => handleAutocomplete(e.target, setToAddress)}
@@ -321,7 +344,7 @@ const Quotation = () => {
                 <input
                     type="text"
                     id="pkgWeightQuote"
-                    placeholder="Weight*"
+                    placeholder="Weight"
                     value={packageWeight}
                     onChange={(e) => setPackageWeight(e.target.value)}
                     className="input-field small-input"
@@ -332,7 +355,7 @@ const Quotation = () => {
                 <input
                     type="text"
                     id="pkgLengthQuote"
-                    placeholder="Length*"
+                    placeholder="Length"
                     value={packageLength}
                     onChange={(e) => setPackageLength(e.target.value)}
                     className="input-field small-input"
@@ -342,7 +365,7 @@ const Quotation = () => {
                 <input
                     type="text"
                     id="pkgWidthQuote"
-                    placeholder="Width*"
+                    placeholder="Width"
                     value={packageWidth}
                     onChange={(e) => setPackageWidth(e.target.value)}
                     className="input-field small-input"
@@ -351,7 +374,7 @@ const Quotation = () => {
                 <input
                     type="text"
                     id="pkgHeightQuote"
-                    placeholder="Height*"
+                    placeholder="Height"
                     value={packageHeight}
                     onChange={(e) => setPackageHeight(e.target.value)}
                     className="input-field small-input"
@@ -362,26 +385,29 @@ const Quotation = () => {
                 Get Quote
             </button>
 
-            <hr className="separator-quote"/>
             <div className="quote-result">
-            {priceExpress && (
+                {(priceExpress && priceFast && priceStandard) && (
+                    <hr className="separator-quote" />
+                )}
+
+                {priceExpress && (
                 <div className="price-info">
                     <span className="label">Estimated Price for Express Delivery:</span>
                     <span className="value">${priceExpress}</span>
                 </div>
-            )}
-            {priceFast && (
-                <div className="price-info">
-                    <span className="label">Estimated Price for Fast Delivery:</span>
-                    <span className="value">${priceFast}</span>
-                </div>
-            )}
-            {priceStandard && (
-                <div className="price-info">
-                    <span className="label">Estimated Price for Standard Delivery:</span>
-                    <span className="value">${priceStandard}</span>
-                </div>
-            )}
+                )}
+                {priceFast && (
+                    <div className="price-info">
+                        <span className="label">Estimated Price for Fast Delivery:</span>
+                        <span className="value">${priceFast}</span>
+                    </div>
+                )}
+                {priceStandard && (
+                    <div className="price-info">
+                        <span className="label">Estimated Price for Standard Delivery:</span>
+                        <span className="value">${priceStandard}</span>
+                    </div>
+                )}
             </div>
 
         </div>
