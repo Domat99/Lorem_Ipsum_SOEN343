@@ -34,7 +34,7 @@
 
 @media (min-width: 768px) {
     .modal-content {
-        width: 70%; /* Narrower on larger screens */
+        width: 70%;
     }
 }
 

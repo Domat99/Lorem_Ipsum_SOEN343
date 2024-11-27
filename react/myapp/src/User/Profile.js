@@ -13,13 +13,11 @@ function Profile() {
     const [showOrderHistory, setShowOrderHistory] = useState(false); // Control visibility of order history
 
     useEffect(() => {
-        // Fetch order history if user data exists
         if (user) {
             fetchOrderHistory(user.id);
         }
     }, [user]);
 
-    // Fetch delivery history from the backend
     const fetchOrderHistory = async (userId) => {
         setLoading(true);
         setError(null);

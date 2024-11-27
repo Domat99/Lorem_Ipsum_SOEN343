@@ -17,8 +17,8 @@ export const menuNavbar = [
         cName: "navbarLinks",
     },
     {
-        title: "Services",
-        url: "",
+        title: "FAQ",
+        url: "/faq",
         cName: "navbarLinks",
     }, {
         title: "Support",
