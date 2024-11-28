@@ -20,29 +20,6 @@ class ShippingService {
             throw error;
         }
     }
-
-    async createDelivery(data) {
-        try {
-            const response = await fetch('http://localhost:8080/delivery/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to create delivery');
-            }
-
-            const delivery = await response.json();
-            return delivery;
-        } catch (error) {
-            console.error("Error creating delivery:", error.message);
-            throw error;
-        }
-    }
 }
 
 export default ShippingService;
