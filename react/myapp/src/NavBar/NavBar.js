@@ -13,7 +13,6 @@ class Navbar extends Component {
     toggleDropdown = () => {
         this.setState((prevState) => {
             if (!prevState.isDropdownOpen) {
-                // Add event listener to close dropdown on outside click
                 document.addEventListener("mousedown", this.handleClickOutside);
             } else {
                 document.removeEventListener("mousedown", this.handleClickOutside);

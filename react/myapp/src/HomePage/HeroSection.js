@@ -48,7 +48,7 @@ const HeroSection = () => {
                             onChange={(e) => setTrackingNumber(e.target.value)}
                         />
                         <button className="track-button" onClick={handleTrack}>
-                            Track <span className="arrow"><i className="fa-solid fa-arrow-right"></i></span>
+                            Quick Track <span className="arrow"><i className="fa-solid fa-arrow-right"></i></span>
                         </button>
                     </div>
 
@@ -65,16 +65,13 @@ const HeroSection = () => {
                             </button>
                             <h3>Tracking Details</h3>
                             <p><b>Status:</b> {trackingResult.status}</p>
-                            <p><b>Origin Address:</b> {trackingResult.originAddress}</p>
-                            <p><b>Destination Address:</b> {trackingResult.destinationAddress}</p>
-                            <p><b>Delivery Option:</b> {trackingResult.deliveryOption}</p>
-                            <p><b>Insurance:</b> {trackingResult.insurance ? 'Yes' : 'No'}</p>
+                            <p><b>Estimated Delivery Date:</b> {trackingResult.deliveryDate}</p>
                         </div>
                     )}
 
                 </div>
                 <div className="hero-image">
-                    <img src="/images/DeliveryMan.png" alt="Delivery Illustration"/>
+                <img src="/images/DeliveryMan.png" alt="Delivery Illustration"/>
                 </div>
             </div>
 
