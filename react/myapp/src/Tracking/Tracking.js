@@ -3,26 +3,24 @@ import './Tracking.css';
 
 const Tracking = () => {
     const [trackingNumber, setTrackingNumber] = useState('');
-    const [shipmentInfo, setShipmentInfo] = useState(null); // Initially null instead of an empty array
+    const [shipmentInfo, setShipmentInfo] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [isTracked, setIsTracked] = useState(false); // To track if tracking has been initiated
+    const [isTracked, setIsTracked] = useState(false);
 
     const handleTrack = async () => {
         setError(null);
         setShipmentInfo(null);
         setLoading(true);
-        setIsTracked(true); // Set tracked flag when user clicks track
+        setIsTracked(true);
 
-        // Basic validation for tracking number format
         if (!/^[0-9]{1,20}$/.test(trackingNumber)) {
             setError('Invalid tracking number format.');
             setLoading(false);
-            setIsTracked(false); // Reset tracked flag if invalid
+            setIsTracked(false);
             return;
         }
 
-        // API call to getDeliveryStatus endpoint
         const trackingUrl = `http://localhost:8080/delivery/status?trackingNumber=${trackingNumber}`;
 
         try {
@@ -60,7 +58,7 @@ const Tracking = () => {
             {isTracked && shipmentInfo && (
                 <div className="shipment-info">
                     <h3>Shipment Information for: <u>{shipmentInfo.trackingNumber}</u></h3>
-                    <p><strong>Status:</strong> {shipmentInfo.status.replaceAll("_", " ")}</p> {/* This will now print OUT FOR DELIVERY without the underscores */}
+                    <p><strong>Status:</strong> {shipmentInfo.status.replaceAll("_", " ")}</p>
                     <p><strong>Estimated Delivery Date:</strong> {shipmentInfo.deliveryDate}</p>
                 </div>
             )}

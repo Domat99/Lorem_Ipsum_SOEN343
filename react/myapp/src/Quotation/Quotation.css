@@ -20,20 +20,15 @@
 }
 
 .form-group-quote {
-    /*display: flex;*/
-    /*flex-wrap: wrap;*/
     gap: 10px;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    /*margin-bottom: 20px;*/
 
 }
 
 .form-group-quote label {
     font-weight: bold;
-    /*color: #333333;*/
-    /*margin-bottom: 8px;*/
     font-size: 0.95rem;
 }
 
@@ -56,7 +51,6 @@
 
 .small-input {
     width: 100px;
-    /*height: 50px;*/
     min-height: 15px;
     max-height: 15px;
 }
@@ -75,7 +69,6 @@
 
 .package-info-title {
     font-size: 18px;
-    /*color: #253847;*/
     font-weight: bold;
     margin-top: 25px;
     margin-bottom: 15px;
@@ -117,23 +110,20 @@
     font-weight: bold;
 }
 
-.quote-pkg-info-labels{
+.quote-pkg-info-labels {
     margin: 0;
 }
 
 .value {
-    margin-left: auto; /* Ensures it stays at the far right */
+    margin-left: auto;
 }
 
 
-.quote-result{
+.quote-result {
     margin-top: 10px;
-    /*width: 100%;*/
-    /*border: #FF6D1F 2px solid;*/
-    /*border-radius: 20px;*/
 }
 
-.separator-quote{
+.separator-quote {
     margin-top: 20px;
     width: 100%;
     border-color: #253847;
