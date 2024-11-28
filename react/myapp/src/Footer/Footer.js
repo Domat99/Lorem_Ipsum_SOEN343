@@ -8,7 +8,7 @@ const Footer = () => {
             <div className='footer-links'>
                 <Link to='/ContactUs'>Contact Us</Link>
                 <Link to="/FAQ">FAQ</Link>
-                <Link to='/Tracking'>Track Your Package</Link>
+                <Link to='/Tracking'>Track a Package</Link>
                 <Link to='/Policy'>Privacy Policy</Link>
 
             </div>

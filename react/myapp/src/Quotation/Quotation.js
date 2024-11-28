@@ -63,7 +63,7 @@ const Quotation = () => {
             try {
                 if (fromAddress && toAddress) {
                     googleMapsService.calculateDistance(fromAddress, toAddress, (distance) => {
-                        if (distance !== null) {
+                        if (distance) {
                             const numericDistance = parseFloat(distance.replace(/[^0-9.]/g, ''));
                             setDistance(numericDistance);
                             resolve(numericDistance);
@@ -301,7 +301,7 @@ const Quotation = () => {
                         onChange={(e) => setPackageWeight(e.target.value)}
                         className="input-field small-input"
                         onWheel={(e) => e.target.blur()}
-                        step="0.5"
+                        step="0.25"
                     />
                 </div>
                 <div className="input-group">

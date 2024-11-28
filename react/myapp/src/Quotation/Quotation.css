@@ -162,7 +162,6 @@
     min-height: 20px;
     max-height: 20px;
     transition: all 0.3s ease-in-out;
-
 }
 
 .package-info-title {
@@ -172,8 +171,8 @@
 
 .quoteInfoMsg{
     color: rgba(128, 128, 128, 1);
-    font-size: 12.5px;
-    margin-top: 0px;
+    font-size: 13px;
+    margin-top: 0;
 }
 
 .separator-msg{
@@ -181,5 +180,4 @@
     width: 100%;
     border-color: rgba(128, 128, 128, 0.3);
     border-width: 1px;
-
 }
