@@ -10,7 +10,8 @@ function Profile() {
     const [orders, setOrders] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [showOrderHistory, setShowOrderHistory] = useState(false); // Control visibility of order history
+    const [showOrderHistory, setShowOrderHistory] = useState(false);
+
 
     useEffect(() => {
         if (user) {
@@ -77,7 +78,7 @@ function Profile() {
                                                 <p><strong>Tracking:</strong> {order.trackingNumber}</p>
                                                 <p><strong>Expected Delivery Date:</strong> {order.deliveryDate}</p>
                                                 <p><strong>Destination:</strong> {order.destinationAddress}</p>
-                                                <p><strong>Estimated Price:</strong> {order.estimatedPrice.toFixed(2)} $
+                                                <p><strong>Price:</strong> {order.estimatedPrice.toFixed(2)} $
                                                 </p>
                                                 <p><strong>Delivery Option:</strong> {order.deliveryOption}</p>
 
@@ -93,7 +94,7 @@ function Profile() {
                                                 {order.status === "DELIVERED" && (
                                                     <button
                                                         className="review_button"
-                                                        onClick={() => navigate(`/Review`)}
+                                                        onClick={() => navigate(`/Review`, { state: { deliveryId: order.id } })}
                                                     >
                                                         Review This Order
                                                     </button>
