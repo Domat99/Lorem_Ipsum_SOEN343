@@ -4,7 +4,7 @@ public class ExpressDeliveryStrategy implements PriceCalculationStrategy {
 
     @Override
     public double calculatePrice(double baseRate, double distanceRate, double weightRate, double sizeRate) {
-        double optionMultiplier = 2.5; // Express multiplier
+        double optionMultiplier = 2.5;
         return (baseRate + distanceRate + weightRate + sizeRate) * optionMultiplier;
     }
 

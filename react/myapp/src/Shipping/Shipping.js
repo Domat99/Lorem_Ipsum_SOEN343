@@ -441,7 +441,6 @@ const Shipping = () => {
     return (
         <div className="shipping-page">
             <h1>Create a Shipment</h1>
-            {userId && <p className="debug-info">Debug: Logged-in User ID: {userId}</p>}
             {showLoginModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
