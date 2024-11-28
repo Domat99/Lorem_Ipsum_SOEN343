@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
+import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {FaStar} from "react-icons/fa";
 import './Review.css';
 
 const Review = () => {
-    const { state } = useLocation();
-    const { deliveryId } = state || {};
+    const {state} = useLocation();
+    const {deliveryId} = state || {};
     const navigate = useNavigate();
 
     const [rating, setRating] = useState("");
@@ -13,6 +13,7 @@ const Review = () => {
     const [message, setMessage] = useState("");
     const [hoverRating, setHoverRating] = useState(0);
     const [showModal, setShowModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!deliveryId) {
@@ -27,6 +28,8 @@ const Review = () => {
         reviewData.append("deliveryId", deliveryId);
         reviewData.append("rating", rating);
         reviewData.append("description", description);
+
+        setLoading(true);
 
         try {
             const response = await fetch("http://localhost:8080/reviews/create", {
@@ -47,6 +50,8 @@ const Review = () => {
             }
         } catch (error) {
             console.error("Error submitting review:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -99,6 +104,13 @@ const Review = () => {
                     Submit Review
                 </button>
             </form>
+
+            {loading && (
+                <div className="loading-indicator">
+                    <p>Submitting your review...</p>
+                    <div className="spinner"></div>
+                </div>
+            )}
 
             {showModal && (
                 <div className="review-modal">
