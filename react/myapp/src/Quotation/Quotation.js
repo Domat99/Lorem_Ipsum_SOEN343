@@ -16,33 +16,19 @@ const Quotation = () => {
     const [priceStandard, setPriceStandard] = useState(null);
     const [price, setPrice] = useState(null);
     const [error, setError] = useState(null);
-
-    // Address and package details state
-    const [fromAddress, setFromAddress] = useState(sessionStorage.getItem('from') || '');
-    const [toAddress, setToAddress] = useState(sessionStorage.getItem('to') || '');
+    const [fromAddress, setFromAddress] = useState( '');
+    const [toAddress, setToAddress] = useState('');
     const [distance, setDistance] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [packageWeight, setPackageWeight] = useState(sessionStorage.getItem('weight') || '');
-    const [packageLength, setPackageLength] = useState(sessionStorage.getItem('length') || '');
-    const [packageWidth, setPackageWidth] = useState(sessionStorage.getItem('width') || '');
-    const [packageHeight, setPackageHeight] = useState(sessionStorage.getItem('height') || '');
+    const [packageWeight, setPackageWeight] = useState( '');
+    const [packageLength, setPackageLength] = useState( '');
+    const [packageWidth, setPackageWidth] = useState('');
+    const [packageHeight, setPackageHeight] = useState('');
 
 
     const packageSize = packageLength && packageWidth && packageHeight
         ? packageLength * packageWidth * packageHeight
         : null;
-
-    // const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
-    // const [estimatedPrice, setEstimatedPrice] = useState(null);
-
-
-    // useEffect(() => {
-    //     sessionStorage.clear();
-    //     googleMapsService.loadGoogleMapsScript(() => {
-    //         initializeAutocomplete(fromInputRef.current, setFromAddress, 'from');
-    //         initializeAutocomplete(toInputRef.current, setToAddress, 'to');
-    //     });
-    // }, []);
 
     useEffect(() => {
         googleMapsService.loadGoogleMapsScript();
@@ -59,19 +45,8 @@ const Quotation = () => {
         sessionStorage.setItem('activeSection', activeSection);
     }, [fromAddress, toAddress, packageWeight, packageLength, packageWidth, packageHeight, activeSection]);
 
-    // useEffect(() => {
-    //     if (fromAddress && toAddress) {
-    //         calculateDistance().catch((error) => {
-    //             console.error("Failed to calculate distance:", error);
-    //         });
-    //     } else {
-    //         setDistance(null); // Clear distance if addresses are incomplete
-    //     }
-    // }, [fromAddress, toAddress]);
-
 
     const initializeAutocomplete = (input, setAddress) => {
-        // if (!input) return;
 
         const autocomplete = new window.google.maps.places.Autocomplete(input);
         autocomplete.setFields(['formatted_address']);
@@ -85,20 +60,29 @@ const Quotation = () => {
 
     const calculateDistance = () => {
         return new Promise((resolve, reject) => {
-            if (fromAddress && toAddress) {
-                googleMapsService.calculateDistance(fromAddress, toAddress, (distance) => {
-                    if (distance !== null) {
-                        const numericDistance = parseFloat(distance.replace(/[^0-9.]/g, ''));
-                        setDistance(numericDistance);
-                        resolve(numericDistance);
-                    } else {
-                        setErrorMessage("Failed to calculate the distance to get a quote. Please try again.");
-                        reject(new Error("Failed to calculate the distance to get a quote."));
-                    }
-                });
-            } else {
-                setErrorMessage("Please enter both 'From' and 'To' addresses.");
-                reject(new Error("Addresses not provided"));
+            try {
+                if (fromAddress && toAddress) {
+                    googleMapsService.calculateDistance(fromAddress, toAddress, (distance) => {
+                        if (distance !== null) {
+                            const numericDistance = parseFloat(distance.replace(/[^0-9.]/g, ''));
+                            setDistance(numericDistance);
+                            resolve(numericDistance);
+                        } else {
+                            setErrorMessage("Failed to calculate the distance to get a quote. Please try again.");
+                            reject(new Error("Failed to calculate the distance to get a quote."));
+                        }
+                    });
+                } else {
+                    setErrorMessage("Please enter both 'From' and 'To' addresses.");
+                    reject(new Error("Addresses not provided"));
+                }
+
+            }
+            catch (error){
+                setErrorMessage("Failed to calculate Distance. Please try again.");
+                console.error("Failed to calculate Distance:", error);
+                alert(error);
+
             }
         });
     };
@@ -106,23 +90,29 @@ const Quotation = () => {
 
     const calculatePrice = async () => {
         setErrorMessage(null);
-        console.log(fromAddress)
-        console.log(toAddress)
+        // console.log(fromAddress)
+        // console.log(toAddress)
+
+
+        if (!fromAddress || !toAddress) {
+            setErrorMessage("Please enter both the 'From' and 'To' addresses to get a new quote.");
+            // alert("Please enter both the 'From' and 'To' addresses.");
+            return;
+        }
 
         if (!packageWeight) {
-            alert("Please enter the package weight.");
+            setErrorMessage("Please enter the package weight to get a new quote.");
+            // alert("Please enter the package weight.");
             return;
         }
         if (!packageSize) {
-            alert("Please enter valid dimensions for the package.");
+            setErrorMessage("Please enter all package dimensions to get a new quote.");
+            // alert("Please enter valid dimensions for the package.");
             return;
         }
 
         try {
-            // await calculateDistance();
-            // const calculatedDistance = distance || await calculateDistance();
             const calculatedDistance = await calculateDistance();
-            // const calculatedDistance = distance;
 
             console.log("ADDRESSES:")
             console.log(fromAddress)
@@ -130,7 +120,6 @@ const Quotation = () => {
             console.log("Distance:", calculatedDistance);
             console.log("Package Weight:", packageWeight);
             console.log("Package Size:", packageSize);
-            // console.log("Selected Delivery Option:", selectedDeliveryOption);
 
             if (calculatedDistance) {
                 let basePriceExpress = await quoteService.getQuote(
@@ -168,49 +157,18 @@ const Quotation = () => {
             console.error("Failed to calculate price:", error);
         }
 
-        // try {
-        //     // Call all three functions sequentially
-        //     await handleGetQuoteExpress();
-        //     await handleGetQuoteFast();
-        //     await handleGetQuoteStandard();
-        // } catch (err) {
-        //     console.log("An error occurred while fetching quotes.");
-        // }
-
     };
 
 
-
-    // Handle Get Quote button click
     const handleGetQuote = async () => {
-    //     setError(null); // Reset previous errors
-    //
-    //     // Validate required fields
-    //     if (!fromAddress || !toAddress || !packageWeight || !packageLength || !packageWidth || !packageHeight) {
-    //         setError('All fields are required');
-    //         return;
-    //     }
-    //
-    //     try {
-    //         const estimatedPrice = await quoteService.getQuote(distance,
-    //             packageWeight,
-    //             packageSize,
-    //             selectedDeliveryOption);
-    //         setPrice(estimatedPrice);
-    //     } catch (err) {
-    //         setError('Failed toAddress get quote. Please try again.');
-    //     }
-    // };
-        setError(null); // Reset previous errors
+        setError(null);
 
-        // Validate required fields
         if (!fromAddress || !toAddress || !packageWeight || !packageLength || !packageWidth || !packageHeight) {
             setError('All fields are required');
             return;
         }
 
         try {
-            // Call all three functions sequentially
             await handleGetQuoteExpress();
             await handleGetQuoteFast();
             await handleGetQuoteStandard();
@@ -220,9 +178,8 @@ const Quotation = () => {
     };
 
     const handleGetQuoteExpress = async () => {
-        setError(null); // Reset previous errors
+        setError(null);
 
-        // Validate required fields
         if (!fromAddress || !toAddress || !packageWeight || !packageLength || !packageWidth || !packageHeight) {
             setError('All fields are required');
             return;
@@ -241,9 +198,8 @@ const Quotation = () => {
     };
 
     const handleGetQuoteFast = async () => {
-        setError(null); // Reset previous errors
+        setError(null);
 
-        // Validate required fields
         if (!fromAddress || !toAddress || !packageWeight || !packageLength || !packageWidth || !packageHeight) {
             setError('All fields are required');
             return;
@@ -262,9 +218,8 @@ const Quotation = () => {
     };
 
     const handleGetQuoteStandard = async () => {
-        setError(null); // Reset previous errors
+        setError(null);
 
-        // Validate required fields
         if (!fromAddress || !toAddress || !packageWeight || !packageLength || !packageWidth || !packageHeight) {
             setError('All fields are required');
             return;
@@ -290,12 +245,9 @@ const Quotation = () => {
     };
 
 
-
-    // Toggle active section for smooth scroll (optional)
     const toggleSection = (section) => {
         setActiveSection(section);
         const sectionRef = {
-            // You can add more sections toAddress be toggled if needed
         }[section];
 
         if (sectionRef && sectionRef.current) {
@@ -313,7 +265,6 @@ const Quotation = () => {
             <div className="form-group-quote">
                 <label htmlFor="fromAddressQuote" className="quote-pkg-info-labels">Origin Address *</label>
                 <input
-                    // ref={fromInputRef}
                     type="text"
                     id="fromAddressQuote"
                     placeholder="From"
@@ -325,7 +276,6 @@ const Quotation = () => {
                 />
                 <label htmlFor="toAddressQuote" className="quote-pkg-info-labels">Destination Address *</label>
                 <input
-                    // ref={toInputRef}
                     type="text"
                     id="toAddressQuote"
                     placeholder="To"
@@ -338,47 +288,61 @@ const Quotation = () => {
             </div>
 
             <h3 className="package-info-title">Package Information:</h3>
+
+
             <div className="form-group-quote package-info">
-                {/*<div>*/}
-                <label htmlFor="pkgWeightQuote" className="quote-pkg-info-labels">Weight (Kg): </label>
-                <input
-                    type="text"
-                    id="pkgWeightQuote"
-                    placeholder="Weight"
-                    value={packageWeight}
-                    onChange={(e) => setPackageWeight(e.target.value)}
-                    className="input-field small-input"
-                />
-                {/*</div>*/}
-                {/*<div>*/}
-                <label htmlFor="pkgLengthQuote" className="quote-pkg-info-labels">Length (cm):</label>
-                <input
-                    type="text"
-                    id="pkgLengthQuote"
-                    placeholder="Length"
-                    value={packageLength}
-                    onChange={(e) => setPackageLength(e.target.value)}
-                    className="input-field small-input"
-                />
-                {/*</div>*/}
-                <label htmlFor="pkgWidthQuote" className="quote-pkg-info-labels">Width (cm):</label>
-                <input
-                    type="text"
-                    id="pkgWidthQuote"
-                    placeholder="Width"
-                    value={packageWidth}
-                    onChange={(e) => setPackageWidth(e.target.value)}
-                    className="input-field small-input"
-                />
-                <label htmlFor="pkgHeightQuote" className="quote-pkg-info-labels">Height (cm):</label>
-                <input
-                    type="text"
-                    id="pkgHeightQuote"
-                    placeholder="Height"
-                    value={packageHeight}
-                    onChange={(e) => setPackageHeight(e.target.value)}
-                    className="input-field small-input"
-                />
+                <div className="input-group">
+                    <label htmlFor="pkgWeightQuote" className="quote-pkg-info-labels">Weight (Kg)*</label>
+                    <input
+                        type="number"
+                        id="pkgWeightQuote"
+                        placeholder="Weight"
+                        value={packageWeight}
+                        onChange={(e) => setPackageWeight(e.target.value)}
+                        className="input-field small-input"
+                        onWheel={(e) => e.target.blur()}
+                        step="0.5"
+                    />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="pkgLengthQuote" className="quote-pkg-info-labels">Length (cm)*</label>
+                    <input
+                        type="number"
+                        id="pkgLengthQuote"
+                        placeholder="Length"
+                        value={packageLength}
+                        onChange={(e) => setPackageLength(e.target.value)}
+                        className="input-field small-input"
+                        onWheel={(e) => e.target.blur()}
+                        step="5"
+                    />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="pkgWidthQuote" className="quote-pkg-info-labels">Width (cm)*</label>
+                    <input
+                        type="number"
+                        id="pkgWidthQuote"
+                        placeholder="Width"
+                        value={packageWidth}
+                        onChange={(e) => setPackageWidth(e.target.value)}
+                        className="input-field small-input"
+                        onWheel={(e) => e.target.blur()}
+                        step="5"
+                    />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="pkgHeightQuote" className="quote-pkg-info-labels">Height (cm)*</label>
+                    <input
+                        type="number"
+                        id="pkgHeightQuote"
+                        placeholder="Height"
+                        value={packageHeight}
+                        onChange={(e) => setPackageHeight(e.target.value)}
+                        className="input-field small-input"
+                        onWheel={(e) => e.target.blur()}
+                        step="5"
+                    />
+                </div>
             </div>
 
             <button onClick={calculatePrice} className="quote-btn">
@@ -386,32 +350,53 @@ const Quotation = () => {
             </button>
 
             <div className="quote-result">
-                {(priceExpress && priceFast && priceStandard) && (
-                    <hr className="separator-quote" />
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+
+                {(!errorMessage && priceExpress && priceFast && priceStandard) && (
+                    <hr className="separator-quote"/>
                 )}
 
-                {priceExpress && (
-                <div className="price-info">
-                    <span className="label">Estimated Price for Express Delivery:</span>
-                    <span className="value">${priceExpress}</span>
-                </div>
+                {!errorMessage &&
+                    priceExpress && (
+                    <div className="price-info">
+                        <span className="label">Estimated Price for Express Delivery:</span>
+                        <span className="value">${priceExpress}</span>
+                    </div>
                 )}
-                {priceFast && (
+
+                {!errorMessage &&
+                    priceFast && (
                     <div className="price-info">
                         <span className="label">Estimated Price for Fast Delivery:</span>
                         <span className="value">${priceFast}</span>
                     </div>
                 )}
-                {priceStandard && (
+
+                {!errorMessage &&
+                    priceStandard && (
                     <div className="price-info">
                         <span className="label">Estimated Price for Standard Delivery:</span>
                         <span className="value">${priceStandard}</span>
                     </div>
                 )}
+
+                {(!errorMessage && priceExpress && priceFast && priceStandard) && (
+                    <div>
+                        <hr className="separator-msg"/>
+                        <p className="quoteInfoMsg">
+                            *Please note that this is a quote only. The final price might be different based on additional options.
+                            {/*<br/>*Minimum and Maximum accepted weight and size are not reflected on this page.*/}
+                            {/*<br/>*The most accurate and final price will be produced when creating a shipment*/}
+                        </p>
+                    </div>
+                )}
+
             </div>
 
         </div>
     );
+
 };
 
 export default Quotation;
