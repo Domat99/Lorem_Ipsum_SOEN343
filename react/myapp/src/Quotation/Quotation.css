@@ -1,11 +1,8 @@
 .quotation-container {
     width: 100%;
     max-width: 600px;
-    margin: 100px auto;
-    margin-top: 30px;
-    margin-bottom: 50px;
-    padding: 40px;
-    padding-top: 1px;
+    margin: 30px auto 50px;
+    padding: 1px 40px 40px;
     background-color: #FFFFFF;
     border-radius: 12px;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -20,20 +17,15 @@
 }
 
 .form-group-quote {
-    /*display: flex;*/
-    /*flex-wrap: wrap;*/
     gap: 10px;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    /*margin-bottom: 20px;*/
 
 }
 
 .form-group-quote label {
     font-weight: bold;
-    /*color: #333333;*/
-    /*margin-bottom: 8px;*/
     font-size: 0.95rem;
 }
 
@@ -46,6 +38,8 @@
     font-size: 16px;
     background-color: #f7f7f7;
     height: 50px;
+    transition: all 0.3s ease-in-out;
+
 }
 
 .input-field:focus {
@@ -56,7 +50,6 @@
 
 .small-input {
     width: 100px;
-    /*height: 50px;*/
     min-height: 15px;
     max-height: 15px;
 }
@@ -75,7 +68,6 @@
 
 .package-info-title {
     font-size: 18px;
-    /*color: #253847;*/
     font-weight: bold;
     margin-top: 25px;
     margin-bottom: 15px;
@@ -117,27 +109,75 @@
     font-weight: bold;
 }
 
-.quote-pkg-info-labels{
+.quote-pkg-info-labels {
     margin: 0;
 }
 
 .value {
-    margin-left: auto; /* Ensures it stays at the far right */
+    margin-left: auto;
 }
 
 
-.quote-result{
+.quote-result {
     margin-top: 10px;
-    /*width: 100%;*/
-    /*border: #FF6D1F 2px solid;*/
-    /*border-radius: 20px;*/
 }
 
-.separator-quote{
+.separator-quote {
     margin-top: 20px;
     width: 100%;
     border-color: #253847;
     border-width: 1px;
 }
 
+.input-pair {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
 
+.input-pair .quote-pkg-info-labels {
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+
+.package-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    justify-content: center;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.small-input {
+    width: 100%;
+    max-width: 120px;
+    min-height: 20px;
+    max-height: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.package-info-title {
+    text-align: left;
+}
+
+
+.quoteInfoMsg{
+    color: rgba(128, 128, 128, 1);
+    font-size: 13px;
+    margin-top: 0;
+}
+
+.separator-msg{
+    margin-top: 10px;
+    width: 100%;
+    border-color: rgba(128, 128, 128, 0.3);
+    border-width: 1px;
+}

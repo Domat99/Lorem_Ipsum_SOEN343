@@ -19,14 +19,13 @@ public class DeliveryStatusUpdater implements DeliveryStatusObserver {
     public void updateDeliveryStatus(Delivery delivery) {
         EnumStatus newStatus = determineStatus(delivery.getDeliveryDate(), delivery.getDeliveryOption());
 
-        // Check if the status has changed
         if (delivery.getStatus() != newStatus) {
-            delivery.setStatus(newStatus);  // Update the status
-            deliveryRepository.save(delivery);  // Persist the updated status to the database
+            delivery.setStatus(newStatus);
+            deliveryRepository.save(delivery);
         }
     }
 
-    // Method to determine the delivery status based on date and delivery option
+
     private EnumStatus determineStatus(LocalDate deliveryDate, String deliveryOption) {
         LocalDate today = LocalDate.now();
         long daysRemaining = ChronoUnit.DAYS.between(today, deliveryDate);
