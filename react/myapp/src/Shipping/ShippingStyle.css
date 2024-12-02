@@ -1,6 +1,8 @@
 .shipping-page {
     max-width: 800px;
     margin: 100px auto;
+    margin-top: 30px;
+    margin-bottom: 50px;
     padding: 20px;
     background-color: #F4F7FA;
     font-family: Arial, sans-serif;
@@ -26,6 +28,22 @@
     margin-bottom: 15px;
 }
 
+.service-option input[type="radio"] {
+    margin-right: 8px;
+    display: inline-block;
+}
+
+.terms-error {
+    color: #E65817;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.valid-input {
+    border: 2px solid #28a745;
+    background-color: #E6F9E6;
+}
+
 .service-option {
     display: flex;
     align-items: center;
@@ -33,9 +51,12 @@
 }
 
 .service-option label {
+    display: flex;
+    align-items: center;
     font-size: 1em;
     margin-left: 8px;
     color: #333;
+    cursor: pointer;
 }
 
 .service-title {
@@ -79,7 +100,6 @@
     margin-top: 10px;
     font-size: 14px;
 }
-
 
 .accordion {
     margin-bottom: 40px;
@@ -143,6 +163,7 @@
     font-size: 0.95rem;
     text-align: center;
 }
+
 
 .terms a {
     color: #FF6D1F;
@@ -226,6 +247,7 @@
     color: #FF6D1F;
     border-bottom: 4px solid #FF6D1F;
 }
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -277,11 +299,6 @@
     font-size: 0.95rem;
 }
 
-.error-message {
-    color: red;
-    font-size: 0.85rem;
-    margin-top: 4px;
-}
 
 .form-actions {
     display: flex;
@@ -289,101 +306,480 @@
     gap: 10px;
     margin-top: 20px;
 }
-/* Payment section container styling */
+
 .payment-section {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 20px;
-    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Title styling */
 .payment-section h3 {
-    color: #333;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 20px;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #253847;
+    font-weight: bold;
 }
 
-/* Payment options styling */
 .payment-option {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
-    font-size: 1rem;
-    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.input-error {
+    border: 2px solid #E65817;
+    background-color: #FFE6E6;
+    border-radius: 4px;
+}
+
+.payment-option input[type="radio"] {
+    margin-right: 10px;
+    cursor: pointer;
 }
 
 .payment-option label {
-    margin-left: 8px;
-    color: #444;
+    font-size: 1em;
+    color: #555;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
-/* Radio button styling */
-.payment-option input[type="radio"] {
-    transform: scale(1.2);
-    accent-color: #ff6d1f; /* Match the orange theme */
-}
-
-/* Instruction message styling */
-.payment-instruction {
-    font-size: 0.9rem;
-    color: #888;
-    margin-top: 10px;
-}
-
-/* Credit Card form styling */
 .credit-card-form {
-    display: grid;
-    gap: 15px;
-    grid-template-columns: 1fr 1fr;
     margin-top: 15px;
 }
 
 .credit-card-form .form-group {
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .credit-card-form label {
-    font-weight: 500;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
     margin-bottom: 5px;
-    color: #444;
+    display: block;
 }
 
-/* Input field styling */
+.credit-card-form .input-with-icon {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px;
+    background-color: #f9f9f9;
+}
+
+.credit-card-form .input-with-icon i {
+    margin-right: 8px;
+    color: #999;
+}
+
 .credit-card-form input[type="text"],
 .credit-card-form input[type="number"] {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+    border: none;
     outline: none;
-    transition: border-color 0.3s ease;
+    flex-grow: 1;
+    font-size: 0.9em;
+    color: #555;
+    background-color: transparent;
 }
 
-.credit-card-form input[type="text"]:focus,
-.credit-card-form input[type="number"]:focus {
-    border-color: #ff6d1f;
+.credit-card-form input::placeholder {
+    color: #aaa;
 }
 
-/* Expiry date and CVV styling */
 .expiry-cvv-group {
     display: flex;
-    gap: 15px;
+    justify-content: space-between;
+    gap: 10px;
 }
 
-/* Cardholder name full-width input */
+.expiry-cvv-group .form-group {
+    flex: 1;
+}
+
 .cardholder-name-group {
-    grid-column: span 2;
+    margin-top: 10px;
+}
+
+.payment-option i {
+    margin-right: 5px;
+    color: #003087;
+}
+
+.payment-option input[type="radio"]:checked + label i {
+    color: #ff6d1f;
+}
+
+.payment-instruction {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 10px;
+}
+
+.modal {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    opacity: 0.9;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: slideIn 0.4s ease-in-out;
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    font-size: 16px;
+    color: #555555;
+    margin: 5px 0;
+}
+
+.modal-content p strong {
+    color: #000000;
+}
+
+.modal-content button {
+    margin: 15px 10px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.modal-content button.btn-primary {
+    background-color: #FF6D1F;
+    color: white;
+}
+
+.modal-content button.btn-primary:hover {
+    background-color: #e65817;
+}
+
+.modal-content button.btn-secondary {
+    background-color: #6C7A89;
+    color: white;
+}
+
+.modal-content button.btn-secondary:hover {
+    background-color: #536D7E;
+}
+
+.modal-content .shipment-details {
+    margin-top: 20px;
+    text-align: left;
+    border-top: 1px solid #EEEEEE;
+    padding-top: 15px;
+}
+
+.modal-content .shipment-details p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.modal p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal-actions .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-actions .btn-primary {
+    background-color: #FF6D1F;
+    color: white;
+}
+
+.modal-actions .btn-secondary {
+    background-color: #6C7A89;
+    color: white;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+}
+
+.modal-content h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.modal-actions {
+    margin-top: 20px;
+}
+
+.modal-actions .btn {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.modal-actions .btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-actions .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.modal-actions .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.modal-actions .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.terms-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.terms-modal-content {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    overflow-y: auto;
+    max-height: 80%;
+}
+
+.terms-title {
+    font-size: 1.8rem;
+    color: #253847;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.terms-intro {
+    font-size: 1rem;
+    color: #555555;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.terms-content section {
+    margin-bottom: 20px;
+}
+
+.terms-content h3 {
+    font-size: 1.2rem;
+    color: #FF6D1F;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.terms-content p {
+    font-size: 0.95rem;
+    color: #333333;
+    line-height: 1.6;
+}
+
+.terms-link {
+    color: #FF6D1F;
+    text-decoration: underline;
+}
+
+.terms-link:hover {
+    color: #E65817;
+}
+
+.terms-agree-btn {
+    background-color: #FF6D1F;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.terms-agree-btn:hover {
+    background-color: #E65817;
+}
+
+.terms-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.terms-list li {
+    margin-bottom: 10px;
+}
+
+.terms-content h3 {
+    font-size: 1.2rem;
+    color: #FF6D1F;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.terms-content p {
+    font-size: 0.95rem;
+    color: #333333;
+    line-height: 1.6;
 }
 
 
 @media (max-width: 768px) {
+    .expiry-cvv-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
     .credit-card-form {
         grid-template-columns: 1fr;
     }
+
     .shipping-page {
         width: 95%;
         margin: 20px auto;

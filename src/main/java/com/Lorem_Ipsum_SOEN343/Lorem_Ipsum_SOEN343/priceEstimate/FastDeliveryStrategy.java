@@ -4,7 +4,7 @@ public class FastDeliveryStrategy implements PriceCalculationStrategy {
 
     @Override
     public double calculatePrice(double baseRate, double distanceRate, double weightRate, double sizeRate) {
-        double optionMultiplier = 1.5; // Fast multiplier
+        double optionMultiplier = 1.5;
         return (baseRate + distanceRate + weightRate + sizeRate) * optionMultiplier;
     }
 }

@@ -15,7 +15,7 @@ import Support from "./InfoPages/Support";
 import Policy from "./InfoPages/Policy";
 import ContactUs from "./InfoPages/ContactUs";
 import Profile from "./User/Profile";
-// import Review from "./User/Review";
+import Review from "./User/Review";
 
 
 
@@ -54,10 +54,7 @@ function App() {
                         <Route path="/Policy" element={<Policy/>}/>
                         <Route path="/ContactUs" element={<ContactUs/>}/>
                         <Route path="/Profile" element={<Profile/>}/>
-                        {/*<Route path="/Review" element={<Review/>}/>*/}
-
-
-
+                        <Route path="/Review" element={<Review/>}/>
 
                     </Routes>
                 </div>

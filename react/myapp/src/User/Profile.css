@@ -45,7 +45,6 @@
 }
 
 
-
 .nav-item {
     background-color: #ffffff;
     border-radius: 12px;
@@ -189,4 +188,18 @@
 .status.delivered {
     color: #047857;
     background-color: #d1fae5;
+}
+
+.star {
+    font-size: 1.5rem;
+    margin-right: 5px;
+}
+
+
+.star.filled {
+    color: #FFD700;
+}
+
+.star.empty {
+    color: lightgray;
 }

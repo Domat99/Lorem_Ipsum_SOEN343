@@ -65,9 +65,8 @@
     font-size: 0.9em;
 }
 
-/* Active card styling */
 .support-card.active {
-    background-color: #f0f4ff; /* Slightly different background to indicate active card */
+    background-color: #f0f4ff;
     border-left: 4px solid #E65817;
 }
 
