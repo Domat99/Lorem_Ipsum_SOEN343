@@ -29,6 +29,6 @@ public class PriceEstimatorService {
         double weightRate = 0.2 * weight;
         double sizeRate = 0.05 * size;
         double result = strategy.calculatePrice(baseRate, distanceRate, weightRate, sizeRate);
-        return Math.round(result * 100.0) / 100.0;
+        return Math.round(result * 30.0) / 100.0;
     }
 }

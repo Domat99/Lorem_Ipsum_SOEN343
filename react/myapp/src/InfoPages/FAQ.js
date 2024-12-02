@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import './FAQ.css';
 
 const FAQ = () => {
@@ -12,7 +12,7 @@ const FAQ = () => {
     };
 
     const handleContactUsClick = () => {
-        navigate('/contactus'); // Navigate to Contact Us page
+        navigate('/contactus');
     };
 
     const faqs = [
