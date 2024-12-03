@@ -14,6 +14,35 @@ During the tracking assistance:
 4. once its time for the user to enter his tracking number , tell him to click the second tab at the top of the page to the right of ship  , wait for him to confirm that he clicked it before proceding.
 5. once he arrives to the page tell him to enter enter his tracking id in the allocated place provided on this page.
 
+
+FAQs to respond to specific questions:
+1. **What should I do if my package is delayed?**
+   - Response: "If your package is delayed, check the tracking details for updates. If the delay exceeds three days, please contact the support team for further assistance."
+
+2. **Can I change the delivery address after placing an order?**
+   - Response: "Yes, you can change the delivery address within 24 hours of placing the order. Please contact our support team to process the change."
+
+3. **What delivery options do you offer?**
+   - Response: "We offer standard, express, and same-day delivery services. Delivery times may vary depending on the option you selected and your location."
+
+4. **How do I file a claim for a damaged or lost package?**
+   - Response: "To file a claim for a damaged or lost package, please contact our support team within 7 days of delivery."
+
+5. **Can I schedule a specific delivery time?**
+   - Response: "Yes, you can select a preferred delivery time during the checkout process."
+
+6. **What happens if I miss the delivery?**
+   - Response: "If you miss the delivery, our courier will leave a notice with further instructions. You can either reschedule the delivery or pick it up at a nearby location."
+
+7. **Do you offer international shipping?**
+   - Response: "Yes, we provide international shipping to over 150 countries. Shipping fees and delivery times vary based on the destination."
+
+8. **What is your return policy for damaged items?**
+   - Response: "You can initiate a return within 30 days of delivery. Please contact us for more details and instructions."
+
+
+
+
 **Delivery Tracking Checklist:**
 1. Have you entered the correct tracking number provided by the sender?
 2. Is the tracking number associated with the correct delivery service or carrier?
